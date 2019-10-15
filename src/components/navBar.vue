@@ -4,10 +4,10 @@
             <ul class="leftNav">
                 <li class="logImg"><a href="">新片场</a></li>
                 <li class="pageHome"><a href="">首页</a></li>
-                <li class="wrapper">
+                <li class="wrapper" @mouseenter="addH" @mouseleave="remH">
                     <a href="">发现</a>
-                    <ul class="tooltip found">
-                        <li class="tpTop">
+                    <ul class="tooltip found" ref='found'>
+                        <li class="tpTop" >
                             <span class="title"><a href="javascript:;">作品&gt;</a></span>
                             <ul>
                                 <li><a href="">广告</a></li>
@@ -40,10 +40,7 @@
                 <li><a href="">注册</a></li>
             </ul>
         </div>
-        <!-- <div class="wrapper">
-            
-            <div class="tooltip">I am a tooltip!</div>
-        </div> -->
+
     </div>
 </template>
 // 导航栏的基本样式
@@ -110,7 +107,7 @@
     transition: all .25s ease-out;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
 
-    height: 0px !important;
+    height: 0px;
     overflow: hidden;
 }
 
@@ -131,8 +128,8 @@
 .wrapper:hover .tooltip {
   opacity: 1;
   transform: translateY(0px);
-  height: 200px !important;
 }
+
 
 
 
@@ -180,6 +177,24 @@
 </style>
 <script>
 export default {
+    data(){
+        return{
+            foundH:'255px',
+            listData:[
+                
+            ]
+
+        }
+    },  
+    methods:{
+        addH(){
+            this.$refs.found.style.height=this.foundH;
+        },
+        remH(){
+            this.$refs.found.style.height=0;
+        }
+    },
+    props:["listData"]
 
 }
 </script>
