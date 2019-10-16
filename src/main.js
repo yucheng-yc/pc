@@ -12,10 +12,8 @@ axios.prototype.axios=axios;
 // normalize.css 
 import 'normalize.css';
 
-// element ui  ->全部引入 以后可以按需引入
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
-Vue.use(ElementUI);
+// iconfont
+import './assets/font/iconfont.css';
 
 Vue.config.productionTip = false
 new Vue({

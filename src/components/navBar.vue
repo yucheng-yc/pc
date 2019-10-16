@@ -2,42 +2,43 @@
     <div>
         <div class="navBar">
             <ul class="leftNav">
-                <li class="logImg"><a href="">新片场</a></li>
-                <li class="pageHome"><a href="">首页</a></li>
+                <li class="logImg"><a href="">{{listData[0].navItem}}</a></li>
+                <li class="pageHome"><a href="">{{listData[1].navItem}}</a></li>
                 <li class="wrapper" @mouseenter="addH" @mouseleave="remH">
-                    <a href="">发现</a>
-                    <ul class="tooltip found" ref='found'>
+                    <a href="" class="iconfont icon-xiala">{{listData[2].navItem}}</a>
+                    <ul class="tooltip sonlist" ref='sonlist' v-if="listData[2].hasSonItem">
                         <li class="tpTop" >
-                            <span class="title"><a href="javascript:;">作品&gt;</a></span>
+                            <span class="title"><a href="javascript:;">{{listData[2].tpTop.title}}»</a></span>
                             <ul>
-                                <li><a href="">广告</a></li>
-                                <li><a href="">宣传片</a></li>
-                                <li><a href="">剧情短片</a></li>
-                                <li><a href="">记录片</a></li>
-                                <li><a href="">创意混剪</a></li>
-                                <li><a href="">MV</a></li>
+                                <li v-for="(con,i) in listData[2].tpTop.ulitem" :key="i"><a href="">{{con}}</a></li>
                             </ul>
                         </li>
                         <li class="tpCenter">
-                            <span class="title"><a href="javascript:;">作品&gt;</a></span>
+                            <span class="title"><a href="javascript:;">{{listData[2].tpCenter.title}}»</a></span>
                         </li>
                         <li class="tpFooter">
-                            
-                            <span class="title"><a href="javascript:;">场库-高品质短片精选</a></span>
+                            <span class="title"><a href="javascript:;">{{listData[2].tpFooter.title}}</a></span>
                         </li>
                     </ul>
                 </li>
-                <li><a href="">找人/机构</a></li>
-                <li><a href="">学院</a></li>
-                <li><a href="">素材</a></li>
-                <li><a href="">活动</a></li>
-                <li><a href="">更多</a></li>
+                <li><a href="">{{listData[3].navItem}}</a></li>
+                <li><a href="">{{listData[4].navItem}}</a></li>
+                <li>
+                    <a href="" class="iconfont icon-xiala">{{listData[5].navItem}}</a>
+                </li>
+                <li>
+                    <a href="" class="iconfont icon-xiala">{{listData[6].navItem}}</a>
+                </li>
+                <li>
+            
+                    <a href="" class="iconfont icon-xiala">{{listData[7].navItem}}</a>
+                </li>
             </ul>
             <ul class="rightNav">
-                <li><a href="">会员</a></li>
-                <li><a href="">搜索</a></li>
-                <li><a href="">登录</a></li>
-                <li><a href="">注册</a></li>
+                <li><a href="" class="iconfont icon-VIP">{{listData[8].navItem}}</a></li>
+                <li><a href="" class="iconfont icon-search"></a></li>
+                <li><a href="">{{listData[10].navItem}}</a></li>
+                <li><a href="">{{listData[11].navItem}}</a></li>
             </ul>
         </div>
 
@@ -46,12 +47,17 @@
 // 导航栏的基本样式
 <style scoped>
     .navBar {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
         display: flex;
         justify-content: space-between;
         flex-wrap: nowrap;
         padding: 0px 1rem;
-        background: orange;
+        background: transparent;
         white-space:nowrap;
+        z-index: 4;
     }
     .leftNav,.rightNav {
         list-style: none;
@@ -59,10 +65,11 @@
         justify-content: space-around;
         height: 100%;
         margin: 0px !important;
+        padding: 0px 2rem 0px 0px;
         
     }
     .leftNav>li,.rightNav>li {
-        padding: 0px 18px;
+        padding: 0px 10px;
         font-weight: 300;
         height: 60px;
         line-height: 60px;
@@ -83,6 +90,7 @@
         list-style: none;
         padding: 0px;
     }
+
 
 </style>
 
@@ -129,23 +137,19 @@
   opacity: 1;
   transform: translateY(0px);
 }
-
-
-
-
 </style>
 
 
 //每个提示框设置
 <style scoped>
-    ul.found {
+    ul.sonlist {
         width: 180px !important;
         padding: 0px;
         display: flex;
         flex-flow: column nowrap;
         overflow: hidden;
     }
-    .found>li {
+    .sonlist>li {
         width: 100%;
         background: rgba(51,51,51,.5);
         border-bottom: 1px solid rgba(61, 61, 61, 0.28);
@@ -153,13 +157,20 @@
     }
     .title {
         text-align: left;
-        line-height: 1.5;
+        line-height: 1.4;
         font-size: 16px;
+        color: #ccc;
+    }
+    .title a {
+        color: #ccc;
+    }
+    .title a:hover {
+        color: white;
     }
     .tpTop>ul{
         display: flex;
         flex-flow: row wrap;
-        justify-content: space-between;
+        justify-content: flex-start;
     }
     .tpTop li {
         width: 40%;
@@ -179,19 +190,23 @@
 export default {
     data(){
         return{
-            foundH:'255px',
-            listData:[
-                
-            ]
-
+            sonlistH:'255px',
+            
         }
     },  
     methods:{
         addH(){
-            this.$refs.found.style.height=this.foundH;
+            if(this.$refs.sonlist!==undefined){
+                this.$refs.sonlist.style.height=this.sonlistH;
+            }
+            
+           
+            
         },
         remH(){
-            this.$refs.found.style.height=0;
+            if(this.$refs.sonlist!==undefined){
+                this.$refs.sonlist.style.height=0;
+            }
         }
     },
     props:["listData"]
