@@ -2,12 +2,14 @@
   <div class="home">
       <bg-video></bg-video>
       <home-article></home-article>
+      <article-show></article-show>
   </div>
 </template>
 
 <script>
 import bgVideo from '../components/bgVideo';
 import homeArticle from '../components/homeArticle';
+import articleShow from '../components/articleShow'
 export default {
   name: 'home',
   components: {
@@ -23,7 +25,8 @@ export default {
   },
   components:{
     bgVideo,
-    homeArticle
+    homeArticle,
+    articleShow
   }
 }
 </script>
