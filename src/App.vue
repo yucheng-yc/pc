@@ -28,7 +28,7 @@ export default {
         {navItem:'更多',H:'255px',hasSonItem:true,tpTop:{title:'作品',ulitem:['广告','宣传片','记录片','创意混剪','MV']},tpCenter:{title:'文章',ulitem:[]},tpFooter:{title:'场库-高品质短片精选',ulitem:[]},other:[]},
         {navItem:'会员'},
         {navItem:'搜索'},
-        {navItem:'会员'},
+        {navItem:'登录'},
         {navItem:'注册'}
       ]
     }

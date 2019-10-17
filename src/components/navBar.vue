@@ -152,8 +152,10 @@
     .sonlist>li {
         width: 100%;
         background: rgba(51,51,51,.5);
-        border-bottom: 1px solid rgba(61, 61, 61, 0.28);
         padding: 1rem;
+    }
+    .sonlist>li:not(:last-child) {
+        border-bottom: 1px solid rgba(189, 186, 186, 0.28);
     }
     .title {
         text-align: left;
@@ -167,7 +169,7 @@
     .title a:hover {
         color: white;
     }
-    .tpTop>ul{
+    .tpTop>ul {
         display: flex;
         flex-flow: row wrap;
         justify-content: flex-start;
