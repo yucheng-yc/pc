@@ -24,21 +24,21 @@
                 <li><a href="">{{listData[3].navItem}}</a></li>
                 <li><a href="">{{listData[4].navItem}}</a></li>
                 <li>
-                    <a href="" class="iconfont icon-xiala">{{listData[5].navItem}}</a>
+                    <a href="javascript:;" class="iconfont icon-xiala">{{listData[5].navItem}}</a>
                 </li>
                 <li>
-                    <a href="" class="iconfont icon-xiala">{{listData[6].navItem}}</a>
+                    <a href="javascript:;" class="iconfont icon-xiala">{{listData[6].navItem}}</a>
                 </li>
                 <li>
             
-                    <a href="" class="iconfont icon-xiala">{{listData[7].navItem}}</a>
+                    <a href="javascript:;" class="iconfont icon-xiala">{{listData[7].navItem}}</a>
                 </li>
             </ul>
             <ul class="rightNav">
-                <li><a href="" class="iconfont icon-VIP">{{listData[8].navItem}}</a></li>
-                <li><a href="" class="iconfont icon-search"></a></li>
-                <li><a href="">{{listData[10].navItem}}</a></li>
-                <li><a href="">{{listData[11].navItem}}</a></li>
+                <li><a href="javascript:;" class="iconfont icon-VIP">{{listData[8].navItem}}</a></li>
+                <li><a href="javascript:;" class="iconfont icon-search"></a></li>
+                <li><a href="javascript:;" ref='login' @click="toLogin">{{listData[10].navItem}}</a></li>
+                <li><a href="javascript:;" @click="toregistered">{{listData[11].navItem}}</a></li>
             </ul>
         </div>
 
@@ -200,15 +200,18 @@ export default {
         addH(){
             if(this.$refs.sonlist!==undefined){
                 this.$refs.sonlist.style.height=this.sonlistH;
-            }
-            
-           
-            
+            }  
         },
         remH(){
             if(this.$refs.sonlist!==undefined){
                 this.$refs.sonlist.style.height=0;
             }
+        },
+        toLogin(){
+            this.$router.push("/login");
+        },
+        toregistered(){
+            this.$router.push("/registered");
         }
     },
     props:["listData"]
