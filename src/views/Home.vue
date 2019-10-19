@@ -2,14 +2,21 @@
   <div class="home">
       <bg-video></bg-video>
       <home-article></home-article>
-      <article-show></article-show>
+      <article-show :togglePhotos="false"></article-show>
+      <article-show :togglePhotos="true"></article-show>
+      <activity></activity>
+      <activity :bgVideoToggle="true"></activity>
+      <homeCserver></homeCserver>
   </div>
 </template>
 
 <script>
 import bgVideo from '../components/bgVideo';
 import homeArticle from '../components/homeArticle';
-import articleShow from '../components/articleShow'
+import articleShow from '../components/articleShow';
+import activity from "../components/activity";
+import homeCserver from "../components/homeCserver"
+
 export default {
   name: 'home',
   components: {
@@ -26,7 +33,9 @@ export default {
   components:{
     bgVideo,
     homeArticle,
-    articleShow
+    articleShow,
+    activity,
+    homeCserver
   }
 }
 </script>
