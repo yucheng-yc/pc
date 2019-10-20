@@ -4,7 +4,7 @@
             <h4 class="levelTitle" :class="{vgh:bgVideoToggle}">举办各类赛事活动</h4>
             <div class="itemIntro" v-if="bgVideoToggle"><em>线上教学</em><em>线下培训</em><em>大师领路</em><em>实战经验</em></div>
             <ul class="exampleList">
-                <li class="first">
+                <li >
                     <div class="imgBox">
                         <img src="//cs.vmovier.com/Uploads/Activity/2017-09-18/59bf99e2e7127.png@732w_460h_1e_1c">
                     </div>
@@ -13,7 +13,7 @@
                         <p>NEW ERA 青年电影季，是一个为未来而建的青年影展，其使命是发现未成名的好电影，鼓励纯粹的创作，扶植优秀青年创作人。</p>
                     </div>
                 </li>
-                <li class="twn">
+                <li >
                     <div class="imgBox">
                         <img src="//cs.vmovier.com/Uploads/Activity/2017-09-18/59bf9d6d08933.png@732w_460h_1e_1c">
                     </div>
@@ -22,7 +22,7 @@
                         <p>创作吧！少年，是新片场社区主办的系列短视频主题征集活动，每期结合电影、商业品牌等主题，累计征集作品3000多部。</p>
                     </div>
                 </li>
-                <li class="three">
+                <li>
                     <div class="imgBox">
                         <img src="//cs.vmovier.com/Uploads/Activity/2017-09-19/59c10d099b26e.png@732w_460h_1e_1c">
                     </div>
@@ -105,6 +105,10 @@
     .imgBox>img {
         height: 230px;
         width: 366px;
+        transition: all .5s; 
+    }
+    img:hover {
+        transform:scale(1.1);
     }
     .contentBox {
         padding-top: 35px;
@@ -193,6 +197,12 @@ export default {
         bgVideoToggle:{
             type:Boolean,
             default:false
+        },
+        activityData:{
+            type:Object,
+            default:function(){
+                return {url:"//oss-xpc0.xpccdn.com/Upload/edu/2018/04/145ad1710e8b009.jpeg?x-oss-process=image%2Fresize%2Cw_720%2Ch_400%2Cm_fill"}
+            }
         }
     },
     watch:{

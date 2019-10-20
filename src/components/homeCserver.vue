@@ -2,7 +2,7 @@
     <div class="homeCserver">
         <h3 class="levelTitle">为创作人提供服务</h3>
         <div class="imgBox">
-            <imgCard :contentBox="contentBoxList[i]" v-for="(con,i) in contentBoxList" :key="i"></imgCard>
+            <img-card :contentBox="contentBoxList[i]" v-for="(con,i) in contentBoxList" :key="i"></img-card>
         </div>
         
     </div>
@@ -12,9 +12,11 @@
     .homeCserver {
         display: flex;
         width: 1140px;
-        height: 738px;
+        /* height: 738px; */
+        height: 900px;
         margin: 0 auto;
         flex-flow: column nowrap;
+        overflow: hidden;
     }
     .levelTitle {
         width: 100%;
@@ -27,6 +29,7 @@
         display: flex;
         flex-flow: row wrap;
         justify-content: space-between;
+        align-items: center;
     }
 </style>
 

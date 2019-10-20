@@ -15,30 +15,27 @@
     .imgCard {
         height: 374px;
         width: 366px;
-        background: orange;
         /* box-shadow:  0 0  10px rgb(63, 62, 62); 
         outline: 1px solid #ccc; */
-        margin-top: 10px;
+        /* margin-top: 10px; */
     }
     .imgBox {
         height: 230px;
         position: relative;
-        background: olive;
         overflow: hidden;
     }
     .imgBox img {
         height: 230px;
         width: 366px;
-        object-fit: cover;
+        /* object-fit: cover; */
         transition: all .5s; 
     }
-    .imgBox:hover img {
+    img:hover{
         transform:scale(1.1);
     }
     .contentBox {
-        padding-top: 35px;
+        padding: 35px 0;
         height: 144px;
-        background: red;
         /* padding: 20px 18px 14px; */
         background-color: #fff;
     }
