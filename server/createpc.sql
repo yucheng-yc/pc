@@ -12,11 +12,12 @@ USE ycpc;
 
 #创建保存用户信息表
 CREATE TABLE userInfo(
-  fid SMALLINT PRIMARY KEY,
-  fname VARCHAR(8),
-  laptopCount INT
+  uid BIGINT PRIMARY KEY AUTO_INCREMENT,
+  uname VARCHAR(11),
+  uphone BIGINT,
+  upwd VARCHAR(11)
 );
 
-INSERT INTO laptop_family VALUES(10,'联想',2);
-INSERT INTO laptop_family VALUES(20,'戴尔',2);
-INSERT INTO laptop_family VALUES(30,'小米',3);
+INSERT INTO userInfo VALUES(10,'余成',13036592217,"1");
+INSERT INTO userInfo VALUES(20,'李静',13036592217,"1");
+INSERT INTO userInfo VALUES(30,'范荣欣',13036592217,"1");
