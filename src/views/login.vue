@@ -1,48 +1,89 @@
 <template>
     <div class="login">
-        <header class="head">toubu </header>
+        <header class="head"></header>
         <div class="content">
             <div class="top">
                 <h1 class="title">用作品打动世界</h1>
             </div>
-            <div class="main">
-                <div class="tabs">
-                    <div class="tab" :class="{active:tabTg}" @click="tabTg=!tabTg">密码登录</div>
-                    <div class="tab" :class="{active:!tabTg}" @click="tabTg=!tabTg">短信登录</div>
-                </div>
 
-                <div class="phone">
-                    <div class="seBox">
-                        <select class="se">
-                            <option value ="+86">+中国大陆86</option>
-                            <option value ="+852">香港</option>
-                            <option value="+853">澳门</option>
-                            <option value="+886">台湾</option>
-                        </select>
+            <!-- swiper轮播项 -->
+            <swiper :options="swiperOption" ref="mySwiper">
+                <!-- login页面部分 -->
+                <swiper-slide>
+                    <div class="main"  ref="idx0main">
+                        <div class="tabs">
+                            <div class="tab" :class="{active:tabTg}" @click="tabTg=!tabTg">密码登录</div>
+                            <div class="tab" :class="{active:!tabTg}" @click="tabTg=!tabTg">短信登录</div>
+                        </div>
+
+                        <div class="phone">
+                            <div class="seBox">
+                                <select class="se" v-model="se">
+                                    <option value ="+86">+中国大陆86</option>
+                                    <option value ="+852">香港</option>
+                                    <option value="+853">澳门</option>
+                                    <option value="+886">台湾</option>
+                                </select>
+                            </div>
+                            <input type="text" class="inp" placeholder="手机号" ref="idx0phoneIpt" v-model="idx0phoneIpt">
+                        </div>
+                        <div class="pwdBox" v-if="tabTg">
+                            <input type="password" name="" id="" class="pwd" placeholder="密码" ref="idx0pwdIpt" v-model="idx0pwdIpt">
+                        </div>
+                        <div class="yzmBox" v-else>
+                            <input type="text" class="yzm" placeholder="验证码" ref="idx0yzmIpt" v-model="idx0yzmIpt">
+                            <button class="yzmBtn" ref="idx0yzmBtn">发送验证码</button>
+                        </div>
+
+                        <div class="loginBox">
+                            <button class="loginBtn" ref="idx0loginBtn">登录</button>
+                        </div>
+                        <div class="forgetBox">
+                            <a href="#" class="forgetLink" ref="idxforgetbtn">忘记密码</a>
+                        </div>
+                        <div class="ortherBox">
+                            <a href="" ref="weibo"><i class="iconfont isize">&#xe619;</i></a>
+                            <a href="" ref="QQ"><i class="iconfont isize">&#xe630;</i></a>
+                            <a href="" ref="weixin"><i class="iconfont isize">&#xe62f;</i></a>
+                            <a href="" ref="email"><i class="iconfont isize">&#xe654;</i></a>
+                        </div>
                     </div>
-                    <input type="text" name="" id="" class="inp" placeholder="手机号">
-                </div>
-                <div class="pwdBox" v-if="tabTg">
-                    <input type="password" name="" id="" class="pwd" placeholder="密码">
-                </div>
-                <div class="yzmBox" v-else>
-                    <input type="text" class="yzm" placeholder="验证码">
-                    <button class="yzmBtn">发送验证码</button>
-                </div>
+                </swiper-slide>
+                <!-- 注册页面部分 -->
+                <swiper-slide>
+                    <div class="main">
+                        <div class="tabs resTitle"><div class="tab">注册</div></div>
+                        <div class="nickname"><input type="text" placeholder="昵称"></div>
+                        <div class="phone"> 
+                             <div class="seBox">
+                                <select class="se">
+                                    <option value ="+86">+中国大陆86</option>
+                                    <option value ="+852">香港</option>
+                                    <option value="+853">澳门</option>
+                                    <option value="+886">台湾</option>
+                                </select>
+                            </div>
+                            <input type="text" name="" id="" class="inp" placeholder="手机号">
+                        </div>
+                         <div class="yzmBox" >
+                            <input type="text"  placeholder="验证码">
+                            <button class="yzmBtn">发送验证码</button>
+                        </div>
+                        <div class="pwdBox" >
+                            <input type="password" class="pwd" placeholder="密码">
+                        </div>
+                         <div class="loginBox">
+                            <button class="loginBtn">注册</button>
+                        </div>
+                         <div class="forgetBox">
+                            <a href="#" class="forgetLink">用户协议</a>
+                        </div>
+                    </div>
+                </swiper-slide>
+            </swiper>
+            
 
-                <div class="loginBox">
-                    <button class="loginBtn">登录</button>
-                </div>
-                <div class="forgetBox">
-                    <a href="#" class="forgetLink">忘记密码</a>
-                </div>
-                <div class="ortherBox">
-                    <a href="" ref="weibo">微博</a>
-                    <a href="" ref="QQ">QQ</a>
-                    <a href="" ref="weixin">微信</a>
-                    <a href="" ref="email">邮箱</a>
-                </div>
-            </div>
+
             <a href="#" class="change">没有账号？注册</a>
         </div>
         <p class="footer">©2019 新片场 · 京ICP备14003808号-1</p>
@@ -194,6 +235,7 @@
         padding: 3px 10px;
         display: flex;
         justify-content: space-between;
+        text-align: center;
     }
     .ortherBox>a {
         display: block;
@@ -257,27 +299,90 @@
     }
 </style>
 
+<style scoped>
+    .isize {
+        font-size: 25px!important;
+    }
+
+</style>
+
+
+<style scoped>
+    
+    .resTitle.tabs>.tab {
+        margin: 0; 
+        width: 100%;
+    }
+    .nickname {
+        padding-left: 10px;
+        border: 1px solid #ccc;
+    }
+    .nickname >input {
+        height: 30px;
+        margin-top: 2.5px;
+        outline: none;
+        width: 96%;
+        border: 0;
+    }
+</style>
 <script>
 export default {
     data(){
         return {
-            tabTg:false
+            // 密码验证还是短信验证
+            tabTg:true,
+            // swiper的配置项
+            swiperOption: {
+                // 每一项的slide自动高度
+                autoHeight: true,
+                // 自动复制一项 让它看起来 滑动效果
+                loop:true,
+                initialSlide :0,
+                effect : 'fade',
+                uniqueNavElements: false,
+                on:{
+                    // slide改变的时候自动触发回调函数
+                    slideChange: function () {
+                        // 获取当前真实值
+                         console.log(this.realIndex);
+                    }
+                }
+            },
+            // 注册信息
+                // 电话号码前缀
+            se:"+86",
+            // 默认输入的电话号码 登录账户
+            idx0phoneIpt:13036592217,
+            // 默认输入的密码
+            idx0pwdIpt:"root",
+            // 默认验证码
+            idx0yzmIpt:10086
         }
     },
     mounted(){
-        this.createtippy(this.$refs.weixin,"微信");
-        this.createtippy(this.$refs.weibo,"微博");
-        this.createtippy(this.$refs.QQ,"QQ");
-        this.createtippy(this.$refs.email,"邮箱");
+        this.myTip();
     },
     methods:{
+        // tip集中操作
         createtippy(ele,content){
-             this.tippy(ele,{
+            this.tippy(ele,{
             content: content,
             placement: 'top',
             duration: 1000,
             delay: 50
-        });
+            });
+        },
+        //tip初始化
+        myTip(){
+            this.createtippy(this.$refs.weixin,"微信");
+            this.createtippy(this.$refs.weibo,"微博");
+            this.createtippy(this.$refs.QQ,"QQ");
+            this.createtippy(this.$refs.email,"邮箱");
+        },
+        // 为表单绑定数据验证
+        loginYz(){
+            // 获取登录的Dom值
+        console.log("1")
         }
     }
 }

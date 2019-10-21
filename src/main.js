@@ -18,9 +18,14 @@ import './assets/font/iconfont.css';
 // 提示插件
 import 'tippy.js/dist/tippy.css';
 const tippy = require('tippy.js').default;
-
 Vue.prototype.tippy=tippy;
 
+// swiper的引用
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+// require styles
+import 'swiper/dist/css/swiper.css'
+
+Vue.use(VueAwesomeSwiper);
 
 Vue.config.productionTip = false
 new Vue({
