@@ -5,9 +5,9 @@ import store from './store'
 // 插件引入
 // axios
 import axios from 'axios'
-axios.defaults.baseURL='http://localhost:4444/';
+axios.defaults.baseURL='http://localhost:5500';
 axios.defaults.withCredentials=true;
-axios.prototype.axios=axios;
+Vue.prototype.axios=axios;
 
 // normalize.css 
 import 'normalize.css';

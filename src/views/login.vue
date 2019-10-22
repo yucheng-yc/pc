@@ -36,7 +36,7 @@
                         </div>
 
                         <div class="loginBox">
-                            <button class="loginBtn" ref="idx0loginBtn">登录</button>
+                            <button class="loginBtn" ref="idx0loginBtn" @click="login">登录</button>
                         </div>
                         <div class="forgetBox">
                             <a href="#" class="forgetLink" ref="idxforgetbtn">忘记密码</a>
@@ -354,9 +354,11 @@ export default {
             // 默认输入的电话号码 登录账户
             idx0phoneIpt:13036592217,
             // 默认输入的密码
-            idx0pwdIpt:"root",
+            idx0pwdIpt:"1",
             // 默认验证码
-            idx0yzmIpt:10086
+            idx0yzmIpt:10086,
+            // 验证是否通过 总开关
+            yzTg:true,
         }
     },
     mounted(){
@@ -382,8 +384,29 @@ export default {
         // 为表单绑定数据验证
         loginYz(){
             // 获取登录的Dom值
-        console.log("1")
+        },
+        //发送登录请求
+        login(){
+            if(!this.yzTg) {
+                return;
+            }
+            // 发送ajax请求 登录操作
+            this.axios.get(`/user/v1/login/:${this.idx0phoneIpt}&:${this.idx0pwdIpt}`)
+            .then(res=>{
+                console.log(res);
+                // 对服务器返回的状态码进行判断 
+                    // 若登录成功跳转HomeLogin
+                if(res.data.code===200) {
+                    this.$router.push("/HomeLogin");
+                    // 将登录信息写入缓存  这里未考虑安全性 只为了减少请求
+                    sessionStorage.setItem('loginInfo',[this.idx0phoneIpt,this.idx0pwdIpt]);
+                }
+            })
+            .catch(err=>{
+                alert("登录失败");
+            })
         }
+
     }
 }
 </script>

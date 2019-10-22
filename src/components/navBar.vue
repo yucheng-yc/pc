@@ -1,6 +1,7 @@
 <template>
     <div>
         <div class="navBar">
+            <!-- 左边的导航部分 -->
             <ul class="leftNav">
                 <li class="logImg"><a href="">{{listData[0].navItem}}</a></li>
                 <li class="pageHome"><a href="">{{listData[1].navItem}}</a></li>

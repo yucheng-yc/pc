@@ -1,31 +1,37 @@
 const express = require('express');
-const app = express();
+const server = express();
 const bodyParser = require('body-parser');
 const user=require("./router/user");
 const cors=require("cors");
 const session = require('express-session')
  
 // 静态资源托管
-app.use(express.static("./public"));
-app.use(bodyParser.urlencoded({extended:false}));
+server.use(express.static(__dirname+"/public"));
+server.use(bodyParser.urlencoded({extended:false}));
 
-app.use(cors({
-  origin:["http://localhost:8080","http://127.0.0.1:5500"]//不能用*
+server.use(cors({
+  // 允许程序列表
+  origin:['http://127.0.0.1:8080',"http://localhost:8080"],
+  // 每次请求需要验证
+  credentials:true
 }));
 
-app.use(session({
+server.use(session({
+  // 安全字符串
   secret: 'keyboard cat',
-  resave: false,
+  // 请求时更新数据
+  resave: true,
+  // 保存初始数据
   saveUninitialized: true,
   cookie: { secure: true }
 }))
 
-app.get('/', function (req, res) {
-  res.send('Hello World')
+server.get('/', function (req, res) {
+  res.sendFile(__dirname+'/public/1.html');
 })
  
-app.listen(5500,()=>{
+server.listen(5500,()=>{
     console.log("server is running Port is 5500");
 })
 
-app.use("/user",user);
+server.use("/user",user);
