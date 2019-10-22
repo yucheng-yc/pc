@@ -9,11 +9,12 @@ router.get("/v1/login/:uphone&:upwd",(req,res)=>{
     var uphone=req.params.uphone;
     if(req.params) {
         pool.query("SELECT uid FROM userInfo WHERE uphone=? and upwd=?",[uphone,upwd],(err,result)=>{
-            if(res.length==0){
+            if(result.length==0){
                 res.send({code:400,msg:"没有账号信息"});
                 return;
             }
             res.send({code:200,msg:"登录成功"});
+           
         }
         );
     }

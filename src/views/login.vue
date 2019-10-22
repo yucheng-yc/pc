@@ -391,7 +391,7 @@ export default {
                 return;
             }
             // 发送ajax请求 登录操作
-            this.axios.get(`/user/v1/login/:${this.idx0phoneIpt}&:${this.idx0pwdIpt}`)
+            this.axios.get(`/user/v1/login/${this.idx0phoneIpt}&${this.idx0pwdIpt}`)
             .then(res=>{
                 console.log(res);
                 // 对服务器返回的状态码进行判断 

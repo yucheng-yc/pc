@@ -3,7 +3,7 @@ const pool=mysql.createPool({
     host:'localhost',
     password:'',
     user:'root',
-    database:"pc",
+    database:"ycpc",
     port:3306,
     connectionLimit:20 //设置连接池大小
 });

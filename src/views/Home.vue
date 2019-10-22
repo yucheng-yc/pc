@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+      <nav-bar></nav-bar>
       <bg-video></bg-video>
       <home-article></home-article>
       <article-show :togglePhotos="false"></article-show>
@@ -13,6 +14,7 @@
 </template>
 
 <script>
+import navBar from '../components/navBar'
 import bgVideo from '../components/bgVideo';
 import homeArticle from '../components/homeArticle';
 import articleShow from '../components/articleShow';
@@ -23,9 +25,6 @@ import homefooter from "../components/homefooter"
 
 export default {
   name: 'home',
-  components: {
-    
-  },
   data(){
     return {
       activityData:{
@@ -43,7 +42,8 @@ export default {
     activity,
     homeCserver,
     say,
-    homefooter
+    homefooter,
+    navBar
   }
 }
 </script>
