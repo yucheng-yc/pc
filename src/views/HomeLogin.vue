@@ -1,7 +1,7 @@
 <template>
     <div class="HomeLogin">
         <!-- 导航栏部分 -->
-        <nav-bar></nav-bar>
+        <nav-bar2></nav-bar2>
 
         <!-- 登录后首页轮播图部分 -->
         <homeswiper></homeswiper>
@@ -18,14 +18,14 @@
 
 <script>
 // 导入导航栏组件
-import navBar from '../components/navBar'
+import navBar2 from '../components/navBar2'
 // 导入轮播图组件
 import homeswiper from "../components/homeswiper";
 // 导入底部组件
 import homefooter from "../components/homefooter"
 export default {
     components:{
-        navBar,
+        navBar2,
         homeswiper,
         homefooter
     }

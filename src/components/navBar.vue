@@ -59,6 +59,7 @@
         background: transparent;
         white-space:nowrap;
         z-index: 4;
+        
     }
     .leftNav,.rightNav {
         list-style: none;

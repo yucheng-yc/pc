@@ -11,7 +11,7 @@ server.use(bodyParser.urlencoded({extended:false}));
 
 server.use(cors({
   // 允许程序列表
-  origin:['http://127.0.0.1:8080',"http://localhost:8080"],
+  origin:['http://localhost:8081',"http://localhost:8080"],  
   // 每次请求需要验证
   credentials:true
 }));
