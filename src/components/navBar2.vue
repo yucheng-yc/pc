@@ -172,8 +172,10 @@ export default {
                 {top:{title:"作品",son:["广告","宣传片","MV"]},center:{title:"文章"},footer:{title:"场库"}},
                 {top:{title:"作品",son:["广告","宣传片","MV"]},center:{title:"文章"},footer:{title:"场库"}}
             ],
-            // 显示隐藏开关
-            hideToggle:true
+            itemArray:[],
+            //用于保存有子项的数据
+            
+
 
         }
     },
@@ -183,11 +185,11 @@ export default {
     methods: {
         // 为所有子项popper初始化
         popperInit(){
-            //用于保存有子项的数据
-            var itemArray=[];
+           var itemArray=[];
             for(var item of this.leftnavList) {
                 if(item.arrow) {
                     itemArray.push(item.strid);
+                    this.itemArray.push(item.strid);
                 }
             }
             // 为子项定位
@@ -196,22 +198,49 @@ export default {
                 new Popper(this.$refs[target][0],this.$refs['navsonitem'+index][0]);
                 ++index;  
             }
+            // 初次加载隐藏 navson
+            this.hidesonNav();
+        },
+        // 用于隐藏 导航子项内容区域
+        hidesonNav(){
+             // 为所有子项添加一个开关 控制显示开始隐藏
+            var index=0;
+            for(var item of this.navsonitemList) {
+                item.tg=false;
+                // 隐藏定位元素
+                this.$refs['navsonitem'+index][0].style.cssText="width:0";
+                index++;
+            }
+        },
+        showsonNav(index){
+            this.$refs['navsonitem'+index][0].style.cssText="";
+            this.navsonitemList[index].tg=true;
         },
         // 控制子项显示隐藏 
         controlNavSon(e){
-            // 事件冒泡 进行节点筛选
+            // 事件冒泡 进行节点筛选 选择所有li
            if(e.target.nodeName=="LI"){
-            // 获取所有有子项的Dom
+            // 遍历获取所有 带子项的li
             for(var item=0;item<this.leftnavList.length;item++) {
                 if(this.leftnavList[item].arrow) {
-                    // 遍历所有子导航栏子项数据 
-                    console.log(e.target);
-                    for(var i=0;i<this.navsonitemList.length;i++) {
-                        // this.hideToggle=true;
-                        this.$refs['navsonitem'+item][0].style.cssText=`width:0;height:0`;
+                    // 判断当前元素是不是 有子项元素
+                    if(e.target==this.$refs[this.leftnavList[item].strid][0]) {
+
+                        // 判断当前元素是否已经隐藏 
+                        this.hidesonNav();
+                        // 显示当前元素对应的子项
+                        // this.showsonNav(item);
+                        // 
+
+                        for(var i=0;i<this.itemArray.length;i++){
+                            if(this.itemArray[i]==this.leftnavList[item].strid) {
+                                 this.$refs['navsonitem'+i][0].style="width:200px";
+                            }
+                        }
+
+
                     }
-                    this.$refs['navsonitem'+item][0].style.cssText='';
-                    }
+                }
                 
             }
            }
