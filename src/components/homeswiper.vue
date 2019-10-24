@@ -3,10 +3,24 @@
           <swiper :options="swiperOption" ref="mySwiper" >
                 <!-- slides -->
                 <swiper-slide  v-for="(item,index) of swiperSlideList" :key="index">
+                    <!-- 自定义内容容器 -->
                     <div class="myslideBox">
+                        <!-- 内容容器最外层背景 -->
                         <img :src="item.bigImgUrl" class="bigImg">
+                        <!-- 最内层内容容器 -->
                         <div class="centerBox">
+                            <!-- 最内层容器背景图片 -->
                             <img :src="item.smallImgUrl" class="smallImg">
+                            <!-- 最内层显示信息容器 -->
+                            <div class="infoBox">
+                                <a href="#" class="info">
+                                    <span class="classification">剧情短片 - 其他</span><br>
+                                    <p class="title">中国版天才枪手《捉刀人》</p><br> 
+                                    <img src="" class="">
+                                    <span class="classification">余成</span>
+                                    <p>24s6d44d</p>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </swiper-slide>
@@ -59,7 +73,41 @@
     }
 </style>
 
-
+// 信息盒子设置
+<style scoped>
+    /* 内容信息展示盒子 */
+    .infoBox {
+        position: absolute;
+        bottom: -.1rem;
+        left: 2.5rem;
+        width: 570px;
+        height: 108px;
+        transition: .5s;
+    }
+     .centerBox:hover>.infoBox {
+        bottom: 3.8rem;
+    }
+    /* 信息链接 */
+    .info {
+        display: block;
+        width: 100%;
+        height: 100%;
+        color: white;
+    }
+    /* 分类信息 */
+    .classification {
+        font-size: 12px;
+        opacity: 0.75;
+    }
+    /* 标题信息 */
+    .title {
+        font-size: 30px;
+        font-weight: 800;
+        padding: 0;
+        margin: 0;
+        padding: 8px 0;
+    }
+</style>
 <script>
 
 export default {
@@ -72,6 +120,7 @@ export default {
                 autoHeight: true,
                 // 自动复制一项 让它看起来 滑动效果
                 loop:true,
+                // 初始化页面
                 initialSlide :0,
                 effect : 'fade',
                 // 分页器
