@@ -14,11 +14,26 @@
                             <!-- 最内层显示信息容器 -->
                             <div class="infoBox">
                                 <a href="#" class="info">
-                                    <span class="classification">剧情短片 - 其他</span><br>
-                                    <p class="title">中国版天才枪手《捉刀人》</p><br> 
-                                    <img src="" class="">
-                                    <span class="classification">余成</span>
-                                    <p>24s6d44d</p>
+                                    <!-- 类型分类 -->
+                                    <p class="classBox">
+                                        <span class="classification" v-for="(c,i) of item.infoObj.classification" :key="i">{{c}}</span>
+                                    </p>
+                                    <!-- 标题 -->
+                                    <p class="title">{{item.infoObj.title}}</p>
+                                    <!-- 头像信息 -->
+                                    <div class="heads">
+                                        <!-- 头部图片 -->
+                                        <p class="headsImg">
+                                            <img src="" class="infoimg">
+                                            <!-- 头部图片认证 -->
+                                            <i class="iconfont"></i>
+                                        </p>
+                                        <!-- 作者信息 -->
+                                        <span class="author">{{item.infoObj.heads.author}}</span>
+                                        <span v-if="item.infoObj.heads.lastimg!=undefined" class="iconfont lastimg" :class="item.infoObj.heads.lastimg"></span>
+                                    </div>
+                                    <!-- 介绍 -->
+                                    <p class="Introduces">{{item.infoObj.Introduces}}</p>
                                 </a>
                             </div>
                         </div>
@@ -84,6 +99,7 @@
         height: 108px;
         transition: .5s;
     }
+    /* 上移效果 */
      .centerBox:hover>.infoBox {
         bottom: 3.8rem;
     }
@@ -94,8 +110,18 @@
         height: 100%;
         color: white;
     }
+    .classBox {
+        padding: 0;
+        margin: 0;
+    }
+    /*当不为一个时加竖线分隔 */ 
+    .classBox>span:not(:last-child)::after {
+        content: '\e62c';
+        font-family: 'iconfont';
+
+    }
     /* 分类信息 */
-    .classification {
+    .classification,.author {
         font-size: 12px;
         opacity: 0.75;
     }
@@ -107,6 +133,41 @@
         margin: 0;
         padding: 8px 0;
     }
+    /* 头像信息 */
+    .heads {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+    }
+    /* 头像图片盒子设置 */
+    .headsImg {
+        padding: 0;
+        margin: 0;
+        width: 2rem;
+        height: 2rem;
+        background-color: orange;
+        position: relative;
+    }
+    .heads>span {
+        display: inline-block;
+        height: 2rem;
+        line-height: 2rem;
+        padding: 0;
+    }
+    /* 作者设置 */
+    span.author {
+        display: inline-block;
+        height: 2rem;
+        line-height: 2rem;
+        padding: 0 .5rem;
+    }
+    /* 对名字后有子图图标的设置 */
+    .lastimg {
+        color: rgba(238, 225, 50, 0.521);
+        font-size: 20px;
+        height: 2.5rem;
+        line-height: 2rem;
+    }
 </style>
 <script>
 
@@ -115,7 +176,7 @@ export default {
         return {
             // swiper的配置项
             swiperOption: {
-                autoplay:true,
+                // autoplay:true,
                 // 每一项的slide自动高度
                 autoHeight: true,
                 // 自动复制一项 让它看起来 滑动效果
@@ -132,35 +193,123 @@ export default {
             swiperSlideList:[
                 {
                     smallImgUrl:"https://cs.xinpianchang.com/uploadfile/banner/2019/10/21/5dad90245fad5.png@2280w_800h_1e_1c",
-                    bigImgUrl:"https://cs.xinpianchang.com/uploadfile/banner/2019/10/21/5dad90245fad5.png@720w_200h_50-20bl_1e_1c"
+                    bigImgUrl:"https://cs.xinpianchang.com/uploadfile/banner/2019/10/21/5dad90245fad5.png@720w_200h_50-20bl_1e_1c",
+                    infoObj:{
+                        classification:['剧情短片-其他','d'],
+                        title:'中国版天才枪手《捉刀人》',
+                        heads:{
+                            infoimg:'',
+                            rzimg:'',
+                            author:'余成',
+                            lastimg:'icon-svip'
+                        },
+                        Introduces:'北京电影学院'
+                    }
                 },
                 {
                     smallImgUrl:"https://cs.xinpianchang.com/uploadfile/banner/2019/10/17/5da8057d63728.png@2280w_800h_1e_1c",
-                    bigImgUrl:"https://cs.xinpianchang.com/uploadfile/banner/2019/10/17/5da8057d63728.png@720w_200h_50-20bl_1e_1c"
+                    bigImgUrl:"https://cs.xinpianchang.com/uploadfile/banner/2019/10/17/5da8057d63728.png@720w_200h_50-20bl_1e_1c",
+                     infoObj:{
+                        classification:['剧情短片-其他','d'],
+                        title:'中国版天才枪手《捉刀人》',
+                        heads:{
+                            infoimg:'',
+                            rzimg:'',
+                            author:'',
+                            lastimg:''
+                        },
+                        Introduces:''
+                    }
                 },
                 {
                     smallImgUrl:"https://cs.xinpianchang.com/uploadfile/banner/2019/09/06/5d71ced6a3a67.jpg@2280w_800h_1e_1c",
-                    bigImgUrl:"https://cs.xinpianchang.com/uploadfile/banner/2019/09/06/5d71ced6a3a67.jpg@720w_200h_50-20bl_1e_1c"
+                    bigImgUrl:"https://cs.xinpianchang.com/uploadfile/banner/2019/09/06/5d71ced6a3a67.jpg@720w_200h_50-20bl_1e_1c",
+                     infoObj:{
+                        classification:['剧情短片-其他','d'],
+                        title:'中国版天才枪手《捉刀人》',
+                        heads:{
+                            infoimg:'',
+                            rzimg:'',
+                            author:'',
+                            lastimg:''
+                        },
+                        Introduces:''
+                    }
                 },
                 {
                     smallImgUrl:"https://cs.xinpianchang.com/uploadfile/banner/2019/10/14/5da3db9312966.jpg@2280w_800h_1e_1c",
-                    bigImgUrl:"https://cs.xinpianchang.com/uploadfile/banner/2019/10/14/5da3db9312966.jpg@720w_200h_50-20bl_1e_1c"
+                    bigImgUrl:"https://cs.xinpianchang.com/uploadfile/banner/2019/10/14/5da3db9312966.jpg@720w_200h_50-20bl_1e_1c",
+                     infoObj:{
+                        classification:['剧情短片-其他','d'],
+                        title:'中国版天才枪手《捉刀人》',
+                        heads:{
+                            infoimg:'',
+                            rzimg:'',
+                            author:'',
+                            lastimg:''
+                        },
+                        Introduces:''
+                    }
                 },
                 {
                     smallImgUrl:"https://cs.xinpianchang.com/uploadfile/banner/2019/10/22/5dae820646750.jpg@2280w_800h_1e_1c",
-                    bigImgUrl:"https://cs.xinpianchang.com/uploadfile/banner/2019/10/22/5dae820646750.jpg@720w_200h_50-20bl_1e_1c"
+                    bigImgUrl:"https://cs.xinpianchang.com/uploadfile/banner/2019/10/22/5dae820646750.jpg@720w_200h_50-20bl_1e_1c",
+                     infoObj:{
+                        classification:['剧情短片-其他','d'],
+                        title:'中国版天才枪手《捉刀人》',
+                        heads:{
+                            infoimg:'',
+                            rzimg:'',
+                            author:'',
+                            lastimg:''
+                        },
+                        Introduces:''
+                    }
                 },
                 {
                     smallImgUrl:"https://cs.xinpianchang.com/uploadfile/banner/2019/10/22/5dae730bf2098.jpg@2280w_800h_1e_1c",
-                    bigImgUrl:"https://cs.xinpianchang.com/uploadfile/banner/2019/10/22/5dae730bf2098.jpg@720w_200h_50-20bl_1e_1c"
+                    bigImgUrl:"https://cs.xinpianchang.com/uploadfile/banner/2019/10/22/5dae730bf2098.jpg@720w_200h_50-20bl_1e_1c",
+                     infoObj:{
+                        classification:['剧情短片-其他','d'],
+                        title:'中国版天才枪手《捉刀人》',
+                        heads:{
+                            infoimg:'',
+                            rzimg:'',
+                            author:'',
+                            lastimg:''
+                        },
+                        Introduces:''
+                    }
                 },
                 {
                     smallImgUrl:"https://cs.xinpianchang.com/uploadfile/banner/2019/10/22/5dae838d75e9c.jpg@2280w_800h_1e_1c",
-                    bigImgUrl:"https://cs.xinpianchang.com/uploadfile/banner/2019/10/22/5dae838d75e9c.jpg@720w_200h_50-20bl_1e_1c"
+                    bigImgUrl:"https://cs.xinpianchang.com/uploadfile/banner/2019/10/22/5dae838d75e9c.jpg@720w_200h_50-20bl_1e_1c",
+                     infoObj:{
+                        classification:['剧情短片-其他','d'],
+                        title:'中国版天才枪手《捉刀人》',
+                        heads:{
+                            infoimg:'',
+                            rzimg:'',
+                            author:'',
+                            lastimg:''
+                        },
+                        Introduces:''
+                    }
                 },
                 {
                     smallImgUrl:"https://cs.xinpianchang.com/uploadfile/banner/2019/09/16/5d7f68b564091.png@2280w_800h_1e_1c",
-                    bigImgUrl:"https://cs.xinpianchang.com/uploadfile/banner/2019/09/16/5d7f68b564091.png@720w_200h_50-20bl_1e_1c"
+                    bigImgUrl:"https://cs.xinpianchang.com/uploadfile/banner/2019/09/16/5d7f68b564091.png@720w_200h_50-20bl_1e_1c",
+                     infoObj:{
+                        classification:['剧情短片-其他','d'],
+                        title:'中国版天才枪手《捉刀人》',
+                        heads:{
+                            infoimg:'',
+                            rzimg:'',
+                            author:'',
+                            lastimg:''
+                        },
+                        Introduces:''
+                    }
                 }
             ]
         }
