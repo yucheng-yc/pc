@@ -12,9 +12,9 @@
         </div>
 
         <!-- 导航子项内容区域 -->
-        <ul class="navsonitem" :ref="'navsonitem'+index" v-for="(item,index) of navsonitemList" :key="index" >
+        <ul class="navsonitem" :ref="'navsonitem'+index" v-for="(item,index) of navsonitemList" :key="index" :class="{hide:navsonitemList[index].tg}">
             <!-- 遍历一个子项所有内容 -->
-            <li v-for="(con,key) of navsonitemList[0]" :key="key" class="sonitem">
+            <li v-for="(con,key) of navsonitemList[index]" :key="key" class="sonitem">
                 <!-- 所有子项内的小的标题 -->
                 <span class="title"><a href="javascript:;">{{con.title}}»</a></span>
                 <!-- 所有小标题内的内容 -->
@@ -139,12 +139,14 @@
 // 设置显示隐藏
 <style scoped>
     .hide {
-        width: 0;
+        width: 0 ;
         height: 0;
     }
 </style>
 <script>
+// 引入popper.js
 import Popper from "popper";
+// 引入动画效果
 export default {
     data() {
         return {
@@ -167,8 +169,8 @@ export default {
             ],
             // 自导航栏子项数据
             navsonitemList:[
-                {top:{title:"作品",son:["广告","宣传片","MV"]},center:{title:"文章"},footer:{title:"场库"}},
-                {top:{title:"作品",son:["广告","宣传片","MV"]},center:{title:"文章"},footer:{title:"场库"}},
+                {top:{title:"作品",son:['广告','宣传片','剧情短片','记录片','创意混剪','MV']},center:{title:"文章"},footer:{title:"场库-高品质精选"}},
+                {top:{title:"视频",son:["动物","人物","自然","科技","建筑物","商业"]},center:{title:"音乐",son:["商业","动感","快乐","预告片","灵感","摇滚"]},footer:{title:"场库"}},
                 {top:{title:"作品",son:["广告","宣传片","MV"]},center:{title:"文章"},footer:{title:"场库"}},
                 {top:{title:"作品",son:["广告","宣传片","MV"]},center:{title:"文章"},footer:{title:"场库"}}
             ],
@@ -179,27 +181,31 @@ export default {
 
         }
     },
+    created () {
+        // 初次加载 都加隐藏开关
+        // for(var item of this.navsonitemList) {
+        //     item.tg=true;
+        //     // this.$set(item,'tg',true);
+        // }
+    },
+    // 挂载生命周期
     mounted () {
         this.popperInit();
     },
     methods: {
         // 为所有子项popper初始化
         popperInit(){
-           var itemArray=[];
             for(var item of this.leftnavList) {
                 if(item.arrow) {
-                    itemArray.push(item.strid);
                     this.itemArray.push(item.strid);
                 }
             }
             // 为子项定位
             var index=0;
-            for(var target of itemArray){
+            for(var target of this.itemArray){
                 new Popper(this.$refs[target][0],this.$refs['navsonitem'+index][0]);
                 ++index;  
             }
-            // 初次加载隐藏 navson
-            this.hidesonNav();
         },
         // 用于隐藏 导航子项内容区域
         hidesonNav(){
@@ -229,12 +235,10 @@ export default {
                         // 判断当前元素是否已经隐藏 
                         this.hidesonNav();
                         // 显示当前元素对应的子项
-                        // this.showsonNav(item);
-                        // 
-
                         for(var i=0;i<this.itemArray.length;i++){
                             if(this.itemArray[i]==this.leftnavList[item].strid) {
-                                 this.$refs['navsonitem'+i][0].style="width:200px";
+                                this.navsonitemList[i].tg=false;
+                                //  console.log(this.navsonitemList[i].tg);
                             }
                         }
 
