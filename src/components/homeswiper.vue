@@ -24,9 +24,9 @@
                                     <div class="heads">
                                         <!-- 头部图片 -->
                                         <p class="headsImg">
-                                            <img src="" class="infoimg">
+                                            <img src="https://oss-xpc0.xpccdn.com/Upload/user/2019/08/025d43a69499a68.jpeg@44w_44h_1e_1c" class="infoimg">
                                             <!-- 头部图片认证 -->
-                                            <i class="iconfont"></i>
+                                            <span class="iconfont v icon-VK"></span>
                                         </p>
                                         <!-- 作者信息 -->
                                         <span class="author">{{item.infoObj.heads.author}}</span>
@@ -143,10 +143,25 @@
     .headsImg {
         padding: 0;
         margin: 0;
-        width: 2rem;
-        height: 2rem;
+        width: 1.6rem;
+        height: 1.6rem;
         background-color: orange;
         position: relative;
+    }
+    /* t头像图片 */
+    .infoimg {
+        border-radius: 50%;
+        width:  1.6rem;
+        height: 1.6rem;
+        vertical-align: middle;
+    }
+    .v {
+        position: absolute;
+        width: .5rem;
+        height: .5rem;
+        bottom: .1rem;
+        right: 0rem;
+        border-radius: 50%;
     }
     .heads>span {
         display: inline-block;
