@@ -6,6 +6,7 @@
         <!-- 登录后首页轮播图部分 -->
         <homeswiper></homeswiper>
         
+        <infocard></infocard>
 
         <!-- 页面底部 -->
         <homefooter></homefooter>
@@ -22,12 +23,16 @@ import navBar3 from '../components/navBar3'
 // 导入轮播图组件
 import homeswiper from "../components/homeswiper";
 // 导入底部组件
-import homefooter from "../components/homefooter"
+import homefooter from "../components/homefooter";
+// 导入信息卡片
+import infocard from "../components/infocard"; 
 export default {
+    // 局部组件的注册
     components:{
         navBar3,
         homeswiper,
-        homefooter
+        homefooter,
+        infocard
     }
 }
 </script>

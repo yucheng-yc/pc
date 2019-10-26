@@ -14,9 +14,13 @@
 </template>
 
 <script>
+// 视频首页导航栏
 import navBar from '../components/navBar'
+// 视频首页 背景视频
 import bgVideo from '../components/bgVideo';
+// 视频首页 文章展示
 import homeArticle from '../components/homeArticle';
+
 import articleShow from '../components/articleShow';
 import activity from "../components/activity";
 import homeCserver from "../components/homeCserver";
