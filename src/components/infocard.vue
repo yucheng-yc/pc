@@ -5,7 +5,18 @@
             <!-- 上层图片盒子 -->
             <div class="imgBox">
                 <div class="img">
-                    <img src="" alt="">
+                    <img :src="cardData.top.imgUrl" alt="图片正在加载">
+                </div>
+                <!-- 显示时间 01'14"-->
+                <span class="time">{{cardData.top.time | thetime}}</span>
+                <!-- 显示小logo -->
+                    <span class="smallLogo" v-if="cardData.top.tjTg"><i class="iconfont icon-shuqian"></i></span>
+                <div class="coverBox">
+                    <div class="coverInfo">
+                        {{cardData.top.coverInfo.content}}
+                    </div>
+                    <!-- 发布年月日信息 2019-10-29发布 -->
+                    <p class="zqTime">{{cardData.top.coverInfo.release |dateFormat}}</p>
                 </div>
             </div>
 
@@ -14,11 +25,10 @@
                 <!-- 头部信息盒子 -->
                 <div class="headerInfoBox">
                     <!-- 标题内容 -->
-                    <p class="title"></p>
+                    <p class="title">{{cardData.bottom.title}}</p>
                     <!-- 分类标签 -->
                     <div class="classBox">
-                        <span class="classification">命名</span>
-                        <span class="classification">命名</span>
+                        <span class="classification" v-for="(con,i) of cardData.bottom.classification" :key="i">{{con}}</span>
                     </div>
                 </div>
 
@@ -26,24 +36,23 @@
                 <div class="footerInfoBox">
                       <!-- 头像信息 -->
                     <a  class="info">
+                        <!-- 第一 头像区域 -->
                         <div class="heads">
                             <!-- 头部图片 -->
                                 <p class="headsImg">
-                                    <img  class="infoimg">
+                                    <img  class="infoimg" :src="cardData.bottom.info.heads.headsImgUrl">
                                     <!-- 头部图片认证 -->
                                     <span class="iconfont v">
-                                        <!-- <img :src="require(`@/assets/images/rzhtrue.png`)" v-if="item.infoObj.heads.rzimg==true">
-                                        <img :src="require(`@/assets/images/rzfalse.png`)" v-else-if='item.infoObj.heads.rzimg==false'>
-                                        <i v-else></i> -->
+                                        <img src="../assets/images/rzhtrue.png" v-if="cardData.bottom.info.heads.vTg">
+                                        <img src="../assets/images/rzfalse.png" v-else-if="cardData.bottom.info.heads.vTg===false">
+                                        <i v-else></i>
                                     </span>
                                 </p>
                             <!-- 作者信息 -->
-                            <span class="author"></span>
-                            <span class="iconfont lastimg">
-                            </span>
+                            <span class="author">{{cardData.bottom.info.heads.author}}</span>
+                            <!-- 第二 介绍区域 -->
+                            <p class="Introduces">{{cardData.bottom.info.heads.Introduces}}</p>
                         </div>
-                        <!-- 介绍 -->
-                        <p class="Introduces"></p>
                     </a>
                 </div>
             </div>
@@ -57,13 +66,39 @@
     .card {
         width: 270px;
         height: 294px;
-        background-color: orange;
     }
     /* 上层图片盒子 */
     .imgBox {
         width: 270px;
         height: 162px;
-        background-color: red;
+        position: relative;
+    }
+    .img {
+        overflow: hidden; 
+    }
+    .img>img {
+        width: 100%;
+        height: 100%;
+        transition: .5s;
+    }
+    /* 显示时间 */
+    .time {
+        position: absolute;
+        color: #fffefe;
+        font-weight: 300;
+        bottom: 14px;
+        right: 14px;
+        z-index: 1;
+    }
+    /* 显示图标设置 */
+    .smallLogo {
+        position: absolute;
+        color: #fffefe;
+        font-weight: 300;
+        top: 14px;
+        left: 14px;
+        z-index: 1;
+        transition: .5s;
     }
     /* 下层显示信息盒子 */
     .infoBox {
@@ -79,20 +114,25 @@
         width: 238px;
         height: 21px;
         margin: 0;
-        font-size: 30px;
-        font-weight: 800;
-        background-color: blueviolet;
+        color: #333333;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1;
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
+
     }
     /* 分类标签盒子样式 */
     .classBox {
-        background-color: yellowgreen;
         margin-top: 12px;
     }
     /* 分类标签具体样式 */
     .classification {
-        color: aqua;
+        color: #999999;
         font-size: 12px;
-        opacity: 0.75;
+        text-align: left;
+        font-weight: 300;
     }
      /*当不为一个时加竖线分隔 */ 
     .classBox>span:not(:last-child)::after {
@@ -100,16 +140,65 @@
         font-family: 'iconfont';
     }
     .footerInfoBox {
-        padding: 0 16px;
+        padding: 10px 16px;
+        border-top: 1px solid rgb(247,247,247);
     }
 </style>
 
+// 遮罩层内容设置
+<style scoped>
+/* 遮罩层 */
+.coverBox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.5);
+    z-index: 10;
+    transition: .5s;
+    opacity: 0;
+}
+
+/* 内容区域宽高 */
+.coverInfo {
+    margin: 14px;
+    max-height: 53px;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 300;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    
+}
+.zqTime {
+    color: #fff;
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    line-height: 1;
+    font-weight: 300;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+}
+
+.imgBox:hover .coverBox {
+    opacity: 1;
+}
+.imgBox:hover .smallLogo {
+    opacity: 0;
+}
+
+
+
+</style>
 
 // 头部盒子设置
 <style scoped>
     /* 头像信息 */
     .heads {
-        background-color: red;
         display: flex;
         flex-flow: row nowrap;
         justify-content: flex-start;
@@ -138,14 +227,13 @@
         width: 1rem;
         height: 1rem;
         bottom: .1rem;
-        right: -.5rem;
+        right: -.55rem;
         border-radius: 50%;
         overflow: hidden;
     }
     .v img {
-        width: .5rem;
-        height: .5rem;
-
+        width: .6rem;
+        height: .6rem;
     }
     .heads>span {
         display: inline-block;
@@ -154,31 +242,107 @@
         padding: 0;
     }
     /* 作者设置 */
-    span.author {
+    .author,.Introduces {
         display: inline-block;
         height: 2rem;
         line-height: 2rem;
-        padding: 0 .5rem;
-    }
-    /* 对名字后有子图图标的设置 */
-    .lastimg {
-        color: rgba(238, 225, 50, 0.521);
-        font-size: 20px;
-        height: 2.5rem;
-        line-height: 2rem;
-        overflow: hidden;
-    }
-    .lastimg img {
-        height: .5rem;
-        width: .5rem;
-    }
+        padding-left: 1rem;
+        margin-left: .5rem;
+        max-width: 100px;
+        color: #333333;
+        font-size: 12px;
 
+    }
     .Introduces {
-        height: 3rem;
+        margin: 0;
+        color: #999999;
+    }
+    .card:hover {
+        box-shadow: 0 4px 12px 0px rgba(0,0,0,.1);
     }
 </style>
 <script>
 export default {
-    
+    data(){
+        return {
+        }
+    },
+    // 局部过滤器
+    filters:{
+        // 时间格式化 01'14"
+        thetime(time){
+            // data数据是以秒为单位
+            var points=Math.floor(time/60);
+            var seconds=Math.floor(time%60);
+            if(points<10){
+                points='0'+points;
+            }
+
+            return `${points}'${seconds}"`
+        },
+        // 发布日期格式化
+        dateFormat(time){
+            // 数据为毫秒数 转为 '2019-10-8'
+            var dt=new Date(time);
+            var year=dt.getFullYear();
+            var month=dt.getMonth();
+            var day=dt.getDate();
+            return `${year}-${month}-${8} 发布`;
+            
+        }
+
+    },
+    props:{
+         // 数据部分
+        cardData:{
+            type:Object,
+            // 默认数据
+            default:function(){
+                var cardDataDefault={
+                    // 卡片上部数据
+                    top:{
+                        // 是否使用推荐图标
+                        tjTg:true,
+                        // 显示视频的时长 单位秒
+                        time: 1200,
+                        // 遮罩层信息
+                        coverInfo:{
+                            // 遮罩层正文部分
+                            content:'',
+                            // 发布时间 数据为毫米数
+                            release: 1572422047389,
+                        },
+                        // 图片url
+                        imgUrl:'https://cs.xinpianchang.com/uploadfile/article/2019/10/26/5db31cb32f7b6.jpeg@540w_324h_1e_1c'
+
+                    },
+                    // 卡片底部数据
+                    bottom:{
+                        // 显示标题
+                        title:'ANOTHER ME我与另一个“我” | PEACE BIRD',
+                        // 分类标签 
+                        classification: ["广告-美妆时尚"],
+                        // 头像区域 信息集合
+                        info:{
+                            // 头像设置
+                            heads:{
+                                // 头像图片
+                                headsImgUrl:"https://oss-xpc0.xpccdn.com/Upload/user/2017/12/095a2acf9beee3a.jpeg@40w_40h_1e_1c",
+                                // 认证类型 true false 或其他 三种
+                                vTg: true,
+                                // 作者信息
+                                author:'2位创作者',
+                                // 职业信息 介绍信息
+                                Introduces:'导演/剪辑',
+                                // 其他信息 
+
+                            }
+                        }
+                    }
+                }
+                return cardDataDefault;
+            }
+        }
+    }
 }
 </script>
