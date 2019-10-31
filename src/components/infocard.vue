@@ -35,12 +35,12 @@
                 <!-- 底部信息盒子 -->
                 <div class="footerInfoBox">
                       <!-- 头像信息 -->
-                    <a  class="info" ref="infoimg">
+                    <a  class="info" >
                         <!-- 第一 头像区域 -->
                         <div class="heads">
                             <!-- 头部图片 -->
                                 <p class="headsImg" >
-                                    <img  class="infoimg" :src="cardData.bottom.boxInfo.headsImgUrl"  >
+                                    <img  class="infoimg" :src="cardData.bottom.boxInfo.headsImgUrl"  ref="infoimg">
                                     <!-- 头部图片认证 -->
                                     <span class="iconfont v">
                                         <img src="../assets/images/rzhtrue.png" v-if="cardData.bottom.boxInfo.vTg">
@@ -57,17 +57,18 @@
                 </div>
             </div>
         </div>
-
+        <!-- 提示框提示信息 -->
+        <div  class="btn" ref="btn"></div>
         <!-- 提示框 一 list -->
         <ul class="tiptitle_one" ref="tiptitle_one">
-            <li class="list_item" v-for="(con,i) of cardData.bottom.info" :key="i">
+            <li class="list_item" v-for="(con,i) of cardData.bottom.info" :key="i" :ref="'li'+i">
                 <!-- 头像信息 -->
                 <a  class="info">
                     <!-- 第一 头像区域 -->
                     <div class="heads">
                         <!-- 头部图片 -->
                             <p class="headsImg">
-                                <img  class="infoimg" :src="con.headsImgUrl" ref="infoimg" >
+                                <img  class="infoimg show" :src="con.headsImgUrl" ref="infoimgShow"  >
                                 <!-- 头部图片认证 -->
                                 <span class="iconfont v">
                                     <img src="../assets/images/rzhtrue.png" v-if="con.vTg">
@@ -82,10 +83,11 @@
                     </div>
                 </a>
             </li>
-            <li class="list_item"></li>
         </ul>
         <!-- 提示框 二 info -->
-        <div class="tiptitle_twn" ref="tiptitle_twn"></div>
+        <div class="tiptitle_twn" ref="tiptitle_twn">
+            this是 
+        </div>
 
     </div> 
 </template>
@@ -322,9 +324,28 @@ li.list_item:not(:last-child) {
 li.list_item:hover {
     background-color: rgb(244,244,244);
 }
-
+.tiptitle_twn {
+    display: block;
+}
 </style>
 
+// 提示按钮定位
+<style scoped>
+.infocard {
+    position: relative;
+}
+.btn {
+    position: absolute;
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    background: orange;
+    bottom: .5rem;
+    left: 1rem;
+    z-index: 88;
+}
+
+</style>
 
 <script>
 import "@/assets/css/navthemes.css"
@@ -436,14 +457,36 @@ export default {
     },
     // 初始化tippy操作
     mounted(){
-        this.tippy(this.$refs.infoimg,{
-            content: this.$refs.tiptitle_one,
-            theme: 'yc',
+        this.createTippy({
+            el:this.$refs.btn,
+            con:this.$refs.tiptitle_one
+        })
+        this.createTippy({
+            el:this.$refs.li0,
+            con:this.$refs.tiptitle_twn,
+            place:'right',
+            offset:'-20'
+        })
+        console.log(this.$refs.tiptitle_twn)
+ 
+    },
+    methods:{
+        // 对提示框进行封装
+        createTippy(obj){
+
+            this.tippy(obj.el,{
+            content: obj.con,
+            theme: obj.methods||'yc',
+            // 子盒子可hover
             interactive: true,
-            placement: 'bottom',
+            placement: obj.place||'bottom',
             duration: 1000,
             delay: 50,
-        });
+            positionFixed: true,
+            html:true,
+            offset:obj.offset ||0
+        })
+        }
     }
 }
 </script>
