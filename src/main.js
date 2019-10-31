@@ -5,7 +5,7 @@ import store from './store'
 // 插件引入
 // axios
 import axios from 'axios'
-axios.defaults.baseURL='http://localhost:5500';
+axios.defaults.baseURL='http://localhost:5050';
 axios.defaults.withCredentials=true;
 Vue.prototype.axios=axios;
 

@@ -11,10 +11,11 @@ server.use(bodyParser.urlencoded({extended:false}));
 
 server.use(cors({
   // 允许程序列表
-  origin:['http://localhost:8081',"http://localhost:8080"],  
+  origin:['http://localhost:8080','http://127.0.0.1:8080'],  
   // 每次请求需要验证
   credentials:true
 }));
+
 
 server.use(session({
   // 安全字符串
@@ -30,8 +31,9 @@ server.get('/', function (req, res) {
   res.sendFile(__dirname+'/public/1.html');
 })
  
-server.listen(5500,()=>{
-    console.log("server is running Port is 5500");
+server.listen(5050,()=>{
+    console.log("server is running");
+    console.log('Port is 5050');
 })
 
 server.use("/user",user);

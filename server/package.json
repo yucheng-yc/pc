@@ -4,7 +4,8 @@
   "description": "为pc项目提供web服务",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "author": "yucheng",
   "license": "ISC",

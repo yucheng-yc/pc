@@ -2,7 +2,7 @@
 SET NAMES UTF8;
 
 #丢弃数据库，如果存在
-DROP DATABASE IF EXISTS ycpc;
+#DROP DATABASE IF EXISTS ycpc;
 
 #创建数据库，设置编码
 CREATE DATABASE ycpc CHARSET=UTF8;

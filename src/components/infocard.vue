@@ -35,28 +35,58 @@
                 <!-- 底部信息盒子 -->
                 <div class="footerInfoBox">
                       <!-- 头像信息 -->
-                    <a  class="info">
+                    <a  class="info" ref="infoimg">
                         <!-- 第一 头像区域 -->
                         <div class="heads">
                             <!-- 头部图片 -->
-                                <p class="headsImg">
-                                    <img  class="infoimg" :src="cardData.bottom.info.heads.headsImgUrl">
+                                <p class="headsImg" >
+                                    <img  class="infoimg" :src="cardData.bottom.boxInfo.headsImgUrl"  >
                                     <!-- 头部图片认证 -->
                                     <span class="iconfont v">
-                                        <img src="../assets/images/rzhtrue.png" v-if="cardData.bottom.info.heads.vTg">
-                                        <img src="../assets/images/rzfalse.png" v-else-if="cardData.bottom.info.heads.vTg===false">
+                                        <img src="../assets/images/rzhtrue.png" v-if="cardData.bottom.boxInfo.vTg">
+                                        <img src="../assets/images/rzfalse.png" v-else-if="cardData.bottom.boxInfo.vTg===false">
                                         <i v-else></i>
                                     </span>
                                 </p>
                             <!-- 作者信息 -->
-                            <span class="author">{{cardData.bottom.info.heads.author}}</span>
+                            <span class="author">{{cardData.bottom.boxInfo.author}}</span>
                             <!-- 第二 介绍区域 -->
-                            <p class="Introduces">{{cardData.bottom.info.heads.Introduces}}</p>
+                            <p class="Introduces">{{cardData.bottom.boxInfo.Introduces}}</p>
                         </div>
                     </a>
                 </div>
             </div>
         </div>
+
+        <!-- 提示框 一 list -->
+        <ul class="tiptitle_one" ref="tiptitle_one">
+            <li class="list_item" v-for="(con,i) of cardData.bottom.info" :key="i">
+                <!-- 头像信息 -->
+                <a  class="info">
+                    <!-- 第一 头像区域 -->
+                    <div class="heads">
+                        <!-- 头部图片 -->
+                            <p class="headsImg">
+                                <img  class="infoimg" :src="con.headsImgUrl" ref="infoimg" >
+                                <!-- 头部图片认证 -->
+                                <span class="iconfont v">
+                                    <img src="../assets/images/rzhtrue.png" v-if="con.vTg">
+                                    <img src="../assets/images/rzfalse.png" v-else-if="con.vTg===false">
+                                    <i v-else></i>
+                                </span>
+                            </p>
+                        <!-- 作者信息 -->
+                        <span class="author">{{con.author}}</span>
+                        <!-- 第二 介绍区域 -->
+                        <p class="Introduces">{{con.Introduces}}</p>
+                    </div>
+                </a>
+            </li>
+            <li class="list_item"></li>
+        </ul>
+        <!-- 提示框 二 info -->
+        <div class="tiptitle_twn" ref="tiptitle_twn"></div>
+
     </div> 
 </template>
 
@@ -261,10 +291,47 @@
         box-shadow: 0 4px 12px 0px rgba(0,0,0,.1);
     }
 </style>
+
+// 提示框设置
+<style scoped>
+/* list盒子设置 */
+.tiptitle_one {
+    list-style: none;
+    width: 200px;
+    overflow:auto;
+    margin: 0;
+    display: flex;
+    flex-flow: column nowrap;
+    box-sizing: border-box;
+    
+}
+.list_item {
+    overflow: hidden;
+    line-height: 28px;
+    height: 28px;
+    margin: 0;
+    white-space: normal;
+    vertical-align: top;
+    padding: 13px 15px;
+    font-size: 0;
+    transition: .8s;
+}
+li.list_item:not(:last-child) {
+    border-bottom: 1px solid rgb(244,244,244);
+}
+li.list_item:hover {
+    background-color: rgb(244,244,244);
+}
+
+</style>
+
+
 <script>
+import "@/assets/css/navthemes.css"
 export default {
     data(){
         return {
+
         }
     },
     // 局部过滤器
@@ -322,10 +389,8 @@ export default {
                         title:'ANOTHER ME我与另一个“我” | PEACE BIRD',
                         // 分类标签 
                         classification: ["广告-美妆时尚"],
-                        // 头像区域 信息集合
-                        info:{
-                            // 头像设置
-                            heads:{
+                        // 盒子上的头像信息
+                        boxInfo:{
                                 // 头像图片
                                 headsImgUrl:"https://oss-xpc0.xpccdn.com/Upload/user/2017/12/095a2acf9beee3a.jpeg@40w_40h_1e_1c",
                                 // 认证类型 true false 或其他 三种
@@ -335,14 +400,50 @@ export default {
                                 // 职业信息 介绍信息
                                 Introduces:'导演/剪辑',
                                 // 其他信息 
+                            },
+                        // 头像区域 信息集合
+                        info:[
+                            {
+                                // 头像图片
+                                headsImgUrl:"https://oss-xpc0.xpccdn.com/Upload/user/2017/12/095a2acf9beee3a.jpeg@40w_40h_1e_1c",
+                                // 认证类型 true false 或其他 三种
+                                vTg: true,
+                                // 作者信息
+                                author:'yc',
+                                // 职业信息 介绍信息
+                                Introduces:'导演/剪辑',
+                                // 其他信息 
+
+                            },
+                            {
+                                // 头像图片
+                                headsImgUrl:"https://oss-xpc0.xpccdn.com/Upload/user/2017/12/095a2acf9beee3a.jpeg@40w_40h_1e_1c",
+                                // 认证类型 true false 或其他 三种
+                                vTg: true,
+                                // 作者信息
+                                author:'yc2',
+                                // 职业信息 介绍信息
+                                Introduces:'导演/剪辑',
+                                // 其他信息 
 
                             }
-                        }
+                        ]
                     }
                 }
                 return cardDataDefault;
             }
         }
+    },
+    // 初始化tippy操作
+    mounted(){
+        this.tippy(this.$refs.infoimg,{
+            content: this.$refs.tiptitle_one,
+            theme: 'yc',
+            interactive: true,
+            placement: 'bottom',
+            duration: 1000,
+            delay: 50,
+        });
     }
 }
 </script>
