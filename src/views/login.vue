@@ -84,7 +84,7 @@
             
 
 
-            <a href="#" class="change">没有账号？注册</a>
+            <a href="javascript:;" class="change" @click="changeSwiper()">{{tabContent}}</a>
         </div>
         <p class="footer">©2019 新片场 · 京ICP备14003808号-1</p>
     </div>
@@ -359,6 +359,8 @@ export default {
             idx0yzmIpt:10086,
             // 验证是否通过 总开关
             yzTg:true,
+            // 注册登陆切换 内容
+            tabContent:'没有账号？注册'
         }
     },
     mounted(){
@@ -405,6 +407,12 @@ export default {
             .catch(err=>{
                 alert("登录失败");
             })
+        },
+        // 改变swiper轮播项
+        changeSwiper(){
+            var sw=this.$refs.mySwiper.swiper;
+            sw.slidePrev();
+            this.tabContent=sw.realIndex==1?'有账号？登陆':'没有账号？注册';
         }
 
     }

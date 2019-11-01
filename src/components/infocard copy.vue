@@ -57,6 +57,49 @@
                 </div>
             </div>
         </div>
+        
+        <!-- 提示框提示信息 -->
+        <div  class="btn" ref="btn"></div>
+        <!-- 提示框 一 list -->
+        <ul class="tiptitle_one" ref="tiptitle_one">
+            <li class="list_item" v-for="(con,i) of cardData.bottom.info" :key="i" :ref="'li'+i">
+                <!-- 头像信息 -->
+                <a  class="info">
+                    <!-- 第一 头像区域 -->
+                    <div class="heads">
+                        <!-- 头部图片 -->
+                            <p class="headsImg">
+                                <img  class="infoimg show" :src="con.headsImgUrl" ref="infoimgShow"  >
+                                <!-- 头部图片认证 -->
+                                <span class="iconfont v">
+                                    <img src="../assets/images/rzhtrue.png" v-if="con.vTg">
+                                    <img src="../assets/images/rzfalse.png" v-else-if="con.vTg===false">
+                                    <i v-else></i>
+                                </span>
+                            </p>
+                        <!-- 作者信息 -->
+                        <span class="author">{{con.author}}</span>
+                        <!-- 第二 介绍区域 -->
+                        <p class="Introduces">{{con.Introduces}}</p>
+                    </div>
+                </a>
+            </li>
+        </ul>
+        <!-- 提示框 二 info -->
+        <div class="tiptitle_twn" ref="tiptitle_twn">
+            <!-- top -->
+            <div class="twnTop">
+                <div class="twnImgBox">
+
+                </div>
+            </div>
+            <!-- center -->
+            <div class="twnCenter"></div>
+            <!-- footer -->
+            <div class="twnFooter"></div>
+
+        </div>
+
     </div> 
 </template>
 
@@ -302,6 +345,24 @@ li.list_item:hover {
 }
 </style>
 
+// 提示按钮定位
+<style scoped>
+.infocard {
+    position: relative;
+}
+.btn {
+    position: absolute;
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    background: orange;
+    bottom: .5rem;
+    left: 1rem;
+    z-index: 88;
+}
+
+</style>
+
 <script>
 import "@/assets/css/themesWhite.css"
 export default {
@@ -408,6 +469,39 @@ export default {
                 }
                 return cardDataDefault;
             }
+        }
+    },
+    // 初始化tippy操作
+    mounted(){
+        this.createTippy({
+            el:this.$refs.btn,
+            con:this.$refs.tiptitle_one
+        })
+        this.createTippy({
+            el:this.$refs.li0,
+            con:this.$refs.tiptitle_twn,
+            place:'right-end'
+        })
+        console.log(this.$refs.tiptitle_twn)
+ 
+    },
+    methods:{
+        // 对提示框进行封装
+        createTippy(obj){
+
+            this.tippy(obj.el,{
+            content: obj.con,
+            theme: obj.theme||'yc',
+            // 子盒子可hover
+            interactive: true,
+            placement: obj.place||'bottom',
+            duration: 1000,
+            delay: 50,
+            positionFixed: true,
+            html:true,
+            offset:obj.offset ||0,
+            inlinePositioning: false,
+        })
         }
     }
 }

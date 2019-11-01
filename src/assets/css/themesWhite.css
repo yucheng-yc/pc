@@ -1,0 +1,34 @@
+/* 自定义主题样式 */
+.tippy-tooltip.yc-theme {
+	color: #26323d;
+    background: rgba(24, 18, 18, 0.7);
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+}
+
+.tippy-tooltip.yc-theme[data-placement^=top]>.tippy-arrow {
+	border-width: 8px 8px 0;
+    background: white;
+}
+
+.tippy-tooltip.yc-theme[data-placement^=bottom]>.tippy-arrow {
+	border-width: 0 8px 8px;
+	border-bottom-color: rgba(30, 30, 30, .6);
+}
+
+.tippy-tooltip.yc-theme[data-placement^=left]>.tippy-arrow {
+	border-width: 8px 0 8px 8px;
+	border-left-color: rgba(30, 30, 30, .6);
+}
+
+.tippy-tooltip.yc-theme[data-placement^=right]>.tippy-arrow {
+	border-width: 8px 8px 8px 0;
+	border-right-color: rgba(30, 30, 30, .6);
+}
+
+.tippy-tooltip.yc-theme>.tippy-backdrop {
+	background-color: rgba(30, 30, 30, .6);
+}
+
+.tippy-tooltip.yc-theme>.tippy-svg-arrow {
+	fill: white;
+}
