@@ -1,7 +1,7 @@
 <template>
     <div class="infoCardTitle">
         <!-- 基本信息盒子 -->
-        <infocard></infocard>
+        <infocard :cardData="cardData"></infocard>
         <!-- 提示框提示信息 -->
         <div  class="btn" ref="btn"></div>
         <!-- 提示框 一 list -->
@@ -50,6 +50,7 @@
 <style scoped>
 .infoCardTitle {
     position: relative;
+    margin-top: 20px;
 }
 </style>
 
@@ -188,7 +189,45 @@ import "@/assets/css/themesWhite.css"
 export default {
     data(){
         return {
-            cardData:{
+            
+        }
+    },
+    methods:{
+        // 对提示框进行封装
+        createTippy(obj){
+            this.tippy(obj.el,{
+            content: obj.con,
+            theme: 'yc',
+            // 子盒子可hover
+            interactive: true,
+            placement: obj.place||'bottom',
+            duration: 1000,
+            delay: 50,
+            offset:obj.offset ||0,
+            })
+        }
+    },
+    components:{
+        infocard
+    },
+    mounted () {
+        this.createTippy({
+            el:this.$refs.li0,
+            con:this.$refs.tiptitle_twn,
+            place:'right-end',
+            
+        })
+            this.createTippy({
+            el:this.$refs.btn,
+            con:this.$refs.tiptitle_one,
+            place:'bottom-start',
+        })
+    },
+    props:{
+        cardData:{
+            type:Object,
+            default:()=>{
+                return {
                     // 卡片上部数据
                     top:{
                         // 是否使用推荐图标
@@ -253,38 +292,8 @@ export default {
                         ]
                     }
                 }
+            }
         }
-    },
-    methods:{
-        // 对提示框进行封装
-        createTippy(obj){
-            this.tippy(obj.el,{
-            content: obj.con,
-            theme: 'yc',
-            // 子盒子可hover
-            interactive: true,
-            placement: obj.place||'bottom',
-            duration: 1000,
-            delay: 50,
-            offset:obj.offset ||0,
-            })
-        }
-    },
-    components:{
-        infocard
-    },
-    mounted () {
-        this.createTippy({
-            el:this.$refs.li0,
-            con:this.$refs.tiptitle_twn,
-            place:'right-end',
-            
-        })
-            this.createTippy({
-            el:this.$refs.btn,
-            con:this.$refs.tiptitle_one,
-            place:'bottom-start',
-        })
     }
 }
 </script>
