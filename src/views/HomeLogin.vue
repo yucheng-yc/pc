@@ -5,8 +5,9 @@
 
         <!-- 登录后首页轮播图部分 -->
         <homeswiper></homeswiper>
-
-        <infocard-title></infocard-title>
+ 
+        <!-- 精选模块 -->
+        <model-page></model-page>   
 
         <!-- 页面底部 -->
         <homefooter></homefooter>
@@ -26,14 +27,16 @@ import homeswiper from "../components/homeswiper";
 import homefooter from "../components/homefooter";
 
 
-import infocardTitle from '../components/infoCardTitle'
+import modelPage from '../components/modelPage'
+
+
 export default {
     // 局部组件的注册
     components:{
         navBar3,
         homeswiper,
         homefooter,
-        infocardTitle
+        modelPage
     }
 }
 </script>

@@ -34,7 +34,7 @@
             <!-- top -->
             <div class="twnTop">
                 <div class="twnImgBox">
-
+                    
                 </div>
             </div>
             <!-- center -->
@@ -156,7 +156,7 @@ li.list_item:hover {
     padding: 15px;
     width: 100px;
     height: 100px;
-    background-color: orange;
+    background-color: transparent;
     z-index: 888;
 }
 </style>
@@ -172,7 +172,7 @@ li.list_item:hover {
     display: block;
     width: 2rem;
     height: 2rem;
-    background: red;
+    background: transparent;
     top: 16rem;
     left: 1rem;
     z-index: 88;
@@ -282,7 +282,8 @@ export default {
         })
             this.createTippy({
             el:this.$refs.btn,
-            con:this.$refs.tiptitle_one
+            con:this.$refs.tiptitle_one,
+            place:'bottom-start',
         })
     }
 }
