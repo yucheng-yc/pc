@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-      <nav-bar></nav-bar>
+      <nav-bar :userInfo="userInfo"></nav-bar>
       <bg-video></bg-video>
       <home-article></home-article>
       <article-show :togglePhotos="false"></article-show>
@@ -26,7 +26,8 @@ import activity from "../components/activity";
 import homeCserver from "../components/homeCserver";
 import say from "../components/say";
 import homefooter from "../components/homefooter"
-
+// 导入辅助函数
+import { mapState } from 'vuex';
 export default {
   name: 'home',
   data(){
@@ -48,6 +49,28 @@ export default {
     say,
     homefooter,
     navBar
+  },
+  mounted(){
+    // vuex数据处理
+    if(this.userInfo.uphone!=''&&this.userInfo.upwd!=''){
+       
+    }
+     console.log(this.userInfo);
+        console.log(this.rightnavsonitemList);
+
+  },
+  // 数据映射
+  computed:{
+      ...mapState({
+          userInfo:state=>state.userInfo,
+          logoImgClass:state=>state.navInfo.logoImgClass,
+          leftnavList:state=>state.navInfo.leftnavList,
+          navsonitemList:state=>state.navInfo.navsonitemList,
+          rightImgClass:state=>state.navInfo.rightImgClass,
+          rightnavsonitemList:state=>state.navInfo.rightnavsonitemList,
+          // 代考虑要不要
+          navstate:state=>state.navInfo.navstate
+      })
   }
 }
 </script>

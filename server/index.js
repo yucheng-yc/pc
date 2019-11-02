@@ -2,6 +2,8 @@
 const express = require('express');
 // 导入express的中间件
 const bodyParser = require('body-parser');
+
+
 // 导入 路由模块
 const user=require("./router/user");
 // 导入cors 解决跨域
@@ -21,7 +23,9 @@ const server = express();
 // 设置静态资源托管
 server.use(express.static(__dirname+"/public"));
 // 挂载中间件
-server.use(bodyParser.urlencoded({extended:false}));
+server.use(bodyParser.urlencoded({
+  extended:false
+}));
 
 // 设置跨域 请求头
 server.use(cors({

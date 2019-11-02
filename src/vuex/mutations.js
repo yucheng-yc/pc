@@ -1,8 +1,10 @@
 import * as types from './mutationsType';
 
 export default {
-  [types.ADD] (state, payload) {
-    state.add = payload;
+  [types.changeUserInfo] (state, {uname,uphone,upwd}) {
+    state.userInfo.uname = uname;
+    state.userInfo.uphone = uphone;
+    state.userInfo.upwd = upwd;
   },
   [types.SETERROR] (state, payload) {
     state.errors = payload;

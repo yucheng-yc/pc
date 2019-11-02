@@ -28,7 +28,7 @@
                             <input type="text" class="inp" placeholder="手机号" ref="idx0phoneIpt" v-model="idx0phoneIpt">
                         </div>
                         <div class="pwdBox" v-if="tabTg">
-                            <input type="password" name="" id="" class="pwd" placeholder="密码" ref="idx0pwdIpt" v-model="idx0pwdIpt">
+                            <input type="password"  class="pwd" placeholder="密码" ref="idx0pwdIpt" v-model="idx0pwdIpt">
                         </div>
                         <div class="yzmBox" v-else>
                             <input type="text" class="yzm" placeholder="验证码" ref="idx0yzmIpt" v-model="idx0yzmIpt">
@@ -53,7 +53,7 @@
                 <swiper-slide>
                     <div class="main">
                         <div class="tabs resTitle"><div class="tab">注册</div></div>
-                        <div class="nickname"><input type="text" placeholder="昵称"></div>
+                        <div class="nickname"><input type="text" placeholder="昵称" v-model="regName"></div>
                         <div class="phone"> 
                              <div class="seBox">
                                 <select class="se">
@@ -63,22 +63,22 @@
                                     <option value="+886">台湾</option>
                                 </select>
                             </div>
-                            <input type="text" name="" id="" class="inp" placeholder="手机号">
+                            <input type="text" class="inp" placeholder="手机号" v-model="regPhone">
                         </div>
                          <div class="yzmBox" >
-                            <input type="text"  placeholder="验证码" >
-                            <div @click="yzmcanvas" class="c1Box">
-                                <canvas id="c1" width="120" height="40"></canvas>
+                            <input type="text"  placeholder="验证码" v-model="userInputYzm">
+                            <div @click="mycanvas($refs.c1)" class="c1Box">
+                                <canvas width="120" height="40" ref="c1"></canvas>
                             </div>
                         </div>
                         <div class="pwdBox" >
-                            <input type="password" class="pwd" placeholder="密码">
+                            <input type="password" class="pwd" placeholder="密码" v-model="regPwd">
                         </div>
                          <div class="loginBox">
-                            <button class="loginBtn">注册</button>
+                            <button class="loginBtn" @click="reg">注册</button>
                         </div>
                          <div class="forgetBox">
-                            <a href="#" class="forgetLink">用户协议</a>
+                            <a href="javascript:;" class="forgetLink">用户协议</a>
                         </div>
                     </div>
                 </swiper-slide>
@@ -276,6 +276,7 @@
         justify-content: space-between;
         border: 1px solid #9e9e9e;
         position: relative;
+        width: 100%;
     }
     .yzm {
         width: 60%;
@@ -298,11 +299,8 @@
         position: relative;
     }
     .c1Box {
-        position: absolute;
-        right: 0;
         width: 120px;
         height: 40px;
-        padding: .1rem;
     }
     #c1 {
         position: absolute;
@@ -339,9 +337,7 @@
     }
 </style>
 <script>
-
-// 引入canvas画验证码
-import mycanvas from '../assets/js/mycanvas'
+import { mapMutations } from 'vuex';
 export default {
     data(){
         return {
@@ -352,10 +348,9 @@ export default {
                 // 每一项的slide自动高度
                 autoHeight: true,
                 // 自动复制一项 让它看起来 滑动效果
-                loop:true,
+                // loop:true,
                 initialSlide :0,
-                effect : 'fade',
-                uniqueNavElements: false,
+                effect : 'fade'
             },
             // 注册信息
                 // 电话号码前缀
@@ -371,11 +366,27 @@ export default {
             // 注册登陆切换 内容
             tabContent:'没有账号？注册',
             // 验证码倒计时 数字
-            yzmBtnNum:'获取验证码'
+            yzmBtnNum:'获取验证码',
+            // 用户输入的验证码
+            userInputYzm:'',
+            // 对比验证码
+            outInputYzm:'',
+            // 昵称
+            regName:'',
+            // 注册电话
+            regPhone:'',
+            // 注册密码
+            regPwd:''
         }
     },
     mounted(){
         this.myTip(); 
+        this.outInputYzm=this.mycanvas(this.$refs.c1).join('').toUpperCase();
+    },
+    computed:{
+        swiper(){
+           return this.$refs.mySwiper.swiper;
+        }
     },
     methods:{
         // tip集中操作
@@ -408,10 +419,22 @@ export default {
             .then(res=>{
                 // 对服务器返回的状态码进行判断 
                     // 若登录成功跳转HomeLogin
-                if(res.data.code===200) {
-                    this.$router.push("/HomeLogin");
-                    // 将登录信息写入缓存  这里未考虑安全性 只为了减少请求
-                    sessionStorage.setItem('loginInfo',[this.idx0phoneIpt,this.idx0pwdIpt]);
+                // if(res.data.code===200) {
+                //     this.$router.push("/HomeLogin");
+                //     // 将登录信息写入缓存  这里未考虑安全性 只为了减少请求
+                //     sessionStorage.setItem('loginInfo',[this.idx0phoneIpt,this.idx0pwdIpt]);
+                // }
+                // 判断是否注册成功 然后跳转页面
+                 if(res.data.code===200) {
+                   
+                    Promise.all([this.changeUserInfo({upwd:this.idx0pwdIpt,uphone:this.idx0phoneIpt,uname:this.regName})])
+                    .then(()=>{
+                        this.$router.push("/HomeLogin");
+                    })
+                    .catch(()=>{
+                        alert('vuex修改状态失败');
+                    })
+                    
                 }
             })
             .catch(err=>{
@@ -419,14 +442,71 @@ export default {
             })
         },
         // 发送注册请求
+        reg(){
+            // 先进行非空验证
+            if(!this.regPwd||!this.regPhone||!this.regName){
+                alert('不能为空');
+                return;
+            }
+            // 对数据进行验证
+            // 昵称验证
+            if(!/^\w{3,}$/i.test(this.regName)){
+                alert('昵称必须3位以上');
+                return;
+            }
 
+            // 电话号码验证
+            if(!/^1[2-9]\d{9}$/i.test(this.regPhone)){
+                alert('电话号码格式不正确');
+                return;
+            }
+            // 对验证码进行验证
+            if(this.userInputYzm.trim().toUpperCase()!=this.outInputYzm.trim()){
+                alert('验证码错误，请重新输入');
+                this.outInputYzm=this.mycanvas(this.$refs.c1);
+                return;
+            }
+            
+            // 最后对密码进行验证
+            if(!/^\w{3,}$/i.test(this.regPwd)) {
+                alert('密码长度必须3位以上');
+                return;
+            }
+
+            // 发送ajax请求 进行注册
+            this.axios.put("/user/v1/reg",`upwd=${this.regPwd}&uphone=${this.regPhone}&uname=${this.regName}`)
+            .then((res)=>{
+                // 判断是否注册成功 然后跳转页面
+                 if(res.data.code===200) {
+                   
+                    Promise.all([this.changeUserInfo({upwd:this.regPwd,uphone:this.regPhone,uname:this.regName})])
+                    .then(()=>{
+                        this.$router.push("/HomeLogin");
+                    })
+                    .catch(()=>{
+                        alert('vuex修改状态失败');
+                    })
+                    
+                }
+            }
+            )
+            .catch((err)=>{
+                console.log(err);
+            })
+
+
+        },
         // 改变swiper轮播项
         changeSwiper(){
-            var sw=this.$refs.mySwiper.swiper;
-            sw.slidePrev();
+            var sw=this.swiper;
+            if(sw.realIndex==1){
+                sw.slidePrev();
+            }else{
+                sw.slideNext();
+            }
+            
             this.tabContent=sw.realIndex==1?'有账号？登陆':'没有账号？注册';
         },
-
         // 验证码 倒计时效果
         yzmBtn(){
             this.yzmBtnNum=60;
@@ -439,16 +519,48 @@ export default {
             }, 1000);
         },
         // 使用canvas画验证码
-        yzmcanvas(){
-        //    var a=mycanvas.getNum();
-        //    console.log(a);
-        alert(123)
-        }
+        mycanvas(c1){
+            // 获得max值到最小值之间的数
+            function rn(min,max){
+                return  Math.floor(Math.random()*(max-min)+min);
+            }
+            //2.新建一个函数产生随机颜色
+            function rc(min,max){
+                var r=rn(min,max);
+                var g=rn(min,max);
+                var b=rn(min,max);
+                return `rgb(${r},${g},${b})`;
+            }
+            //3.填充背景颜色,颜色要浅一点
+            var w=120;
+            var h=40;
+            var ctx=c1.getContext("2d");
+             ctx.fillRect(0,0,w,h);
+            
+            //4.随机产生字符串
+            var pool="ABCDEFGHIJKLIMNOPQRSTUVWSYZ1234567890";
+            var arr=[];
+            for(var i=0;i<4;i++){
+                var c=pool[rn(0,pool.length)];//随机的字
+                arr.push(c);
+                var fs=rn(18,40);//字体的大小
+                var deg=rn(-30,30);//字体的旋转角度
+                ctx.font=fs+'px Simhei';
+                ctx.textBaseline="top";
+                ctx.fillStyle=rc(0,250);
+                ctx.save();
+                ctx.translate(30*i+15,15);
+                ctx.rotate(deg*Math.PI/180);
+                ctx.fillText(c,-15+5,-15);
+                ctx.restore();
+            }
+            return arr;
+        },
+        // 使用辅助函数进行登录状态操作
+        ...mapMutations({
+            'changeUserInfo':'changeUserInfo'
+        })
 
-    },
-    updated(){
-        var code=mycanvas.getNum();
-        console.log(code);
     }
 }
 </script>
