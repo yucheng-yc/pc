@@ -171,11 +171,11 @@ li.list_item:hover {
 .btn {
     position: absolute;
     display: block;
-    width: 2rem;
-    height: 2rem;
+    width: 3rem;
+    height: 3rem;
     background: transparent;
-    top: 16rem;
-    left: 1rem;
+    top: 15.4rem;
+    left: 0;
     z-index: 88;
 }
 
@@ -204,6 +204,9 @@ export default {
             duration: 1000,
             delay: 50,
             offset:obj.offset ||0,
+            popperOptions: {
+                positionFixed: true,
+            }
             })
         }
     },

@@ -1,0 +1,17 @@
+zh fs_24 fw_600 c_b_3 v-center 编辑精选
+en fs_24 fw_300 c_b_3 v-center STAFF PICKS
+more fs_14 fw_600 c_b_3 更多
+
+zh fs_24 fw_600 c_b_3 v-center  广告/宣传片
+en fs_24 fw_300 c_b_3 v-center  ADVERTISING
+
+staff-pisk real-staff-pisk  编辑精选
+
+staff-pisk 广告/宣传片  data-module='1'
+
+index-main main-center  内容页面
+
+
+staff-pisk real-staff-pisk 带有推荐的
+
+staff-pisk 普通

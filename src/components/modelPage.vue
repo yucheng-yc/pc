@@ -111,7 +111,6 @@ export default {
         return {
             
             swiperOption: {
-                autoplay: true,
                 // 自动复制一项 让它看起来 滑动效果
                 loop:true,
                 initialSlide :0,

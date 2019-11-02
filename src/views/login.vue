@@ -32,7 +32,7 @@
                         </div>
                         <div class="yzmBox" v-else>
                             <input type="text" class="yzm" placeholder="验证码" ref="idx0yzmIpt" v-model="idx0yzmIpt">
-                            <button class="yzmBtn" ref="idx0yzmBtn">发送验证码</button>
+                            <button class="yzmBtn" ref="idx0yzmBtn" @click="yzmBtn">{{yzmBtnNum}}</button>
                         </div>
 
                         <div class="loginBox">
@@ -66,8 +66,10 @@
                             <input type="text" name="" id="" class="inp" placeholder="手机号">
                         </div>
                          <div class="yzmBox" >
-                            <input type="text"  placeholder="验证码">
-                            <button class="yzmBtn">发送验证码</button>
+                            <input type="text"  placeholder="验证码" >
+                            <div @click="yzmcanvas" class="c1Box">
+                                <canvas id="c1" width="120" height="40"></canvas>
+                            </div>
                         </div>
                         <div class="pwdBox" >
                             <input type="password" class="pwd" placeholder="密码">
@@ -273,6 +275,7 @@
         display: flex;
         justify-content: space-between;
         border: 1px solid #9e9e9e;
+        position: relative;
     }
     .yzm {
         width: 60%;
@@ -287,12 +290,22 @@
     .yzmBtn {
         width: 40%;
         text-decoration: none;
-        background-color: #f7f7f7;
         outline: none;
         border: 0;
         border-left: 1px solid #ccc;
         cursor: pointer;
         font-size: 14px;
+        position: relative;
+    }
+    .c1Box {
+        position: absolute;
+        right: 0;
+        width: 120px;
+        height: 40px;
+        padding: .1rem;
+    }
+    #c1 {
+        position: absolute;
     }
     input:focus {
         box-shadow: 0,0,5px #ccc;
@@ -326,6 +339,9 @@
     }
 </style>
 <script>
+
+// 引入canvas画验证码
+import mycanvas from '../assets/js/mycanvas'
 export default {
     data(){
         return {
@@ -340,13 +356,6 @@ export default {
                 initialSlide :0,
                 effect : 'fade',
                 uniqueNavElements: false,
-                on:{
-                    // slide改变的时候自动触发回调函数
-                    slideChange: function () {
-                        // 获取当前真实值
-                         console.log(this.realIndex);
-                    }
-                }
             },
             // 注册信息
                 // 电话号码前缀
@@ -360,11 +369,13 @@ export default {
             // 验证是否通过 总开关
             yzTg:true,
             // 注册登陆切换 内容
-            tabContent:'没有账号？注册'
+            tabContent:'没有账号？注册',
+            // 验证码倒计时 数字
+            yzmBtnNum:'获取验证码'
         }
     },
     mounted(){
-        this.myTip();
+        this.myTip(); 
     },
     methods:{
         // tip集中操作
@@ -395,7 +406,6 @@ export default {
             // 发送ajax请求 登录操作
             this.axios.get(`/user/v1/login/${this.idx0phoneIpt}&${this.idx0pwdIpt}`)
             .then(res=>{
-                console.log(res);
                 // 对服务器返回的状态码进行判断 
                     // 若登录成功跳转HomeLogin
                 if(res.data.code===200) {
@@ -408,13 +418,37 @@ export default {
                 alert("登录失败");
             })
         },
+        // 发送注册请求
+
         // 改变swiper轮播项
         changeSwiper(){
             var sw=this.$refs.mySwiper.swiper;
             sw.slidePrev();
             this.tabContent=sw.realIndex==1?'有账号？登陆':'没有账号？注册';
+        },
+
+        // 验证码 倒计时效果
+        yzmBtn(){
+            this.yzmBtnNum=60;
+            var t=setInterval(() => {
+                this.yzmBtnNum--;
+                if(this.yzmBtnNum==0){
+                    this.yzmBtnNum='获取验证码';
+                    clearInterval(t);
+                }
+            }, 1000);
+        },
+        // 使用canvas画验证码
+        yzmcanvas(){
+        //    var a=mycanvas.getNum();
+        //    console.log(a);
+        alert(123)
         }
 
+    },
+    updated(){
+        var code=mycanvas.getNum();
+        console.log(code);
     }
 }
 </script>
