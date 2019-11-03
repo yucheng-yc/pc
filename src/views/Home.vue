@@ -34,7 +34,8 @@ export default {
     return {
       activityData:{
         url:"//oss-xpc0.xpccdn.com/Upload/edu/2018/04/145ad1710e8b009.jpeg?x-oss-process=image%2Fresize%2Cw_720%2Ch_400%2Cm_fill"
-      }
+      },
+      // 导航栏数据
     }
   },
   methods:{
@@ -50,13 +51,17 @@ export default {
     homefooter,
     navBar
   },
-  mounted(){
-    // vuex数据处理
-    if(this.userInfo.uphone!=''&&this.userInfo.upwd!=''){
+  // vuex数据处理 
+  created(){
+
+    // navstate如果为true则为登录状态 若为false则未登录
+    if(this.navstate){
        
+    }else{
+
     }
      console.log(this.userInfo);
-        console.log(this.rightnavsonitemList);
+    console.log(this.rightnavsonitemList);
 
   },
   // 数据映射

@@ -33,14 +33,16 @@
             </li>
         </ul>
         <!-- 右侧子项 -->
-        <ul class="navsonitem" :ref="'rightnavsonitem'+index" v-for="(item,index) of rightnavsonitemList" :key="index+'right'">
-            <li v-for="(con,key) of rightnavsonitemList[index]" :key="key" class="sonitem">
-                <span class="title"><a href="javascript:;">{{con.title}}»</a></span>
-                <ul class="content">
-                    <li v-for="(son,i) of con.son" :key="i"><a href="javascript:;">{{son}}</a></li>
-                </ul>
-            </li>
-        </ul>
+        <div v-if="rightnavsonitemList!=null">
+            <ul class="navsonitem" :ref="'rightnavsonitem'+index" v-for="(item,index) of rightnavsonitemList" :key="index+'right'">
+                <li v-for="(con,key) of rightnavsonitemList[index]" :key="key" class="sonitem">
+                    <span class="title"><a href="javascript:;">{{con.title}}»</a></span>
+                    <ul class="content">
+                        <li v-for="(son,i) of con.son" :key="i"><a href="javascript:;">{{son}}</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -174,6 +176,8 @@
 // 主题文件
 // import 'tippy.js/themes/light.css';
 import "@/assets/css/navthemes.css"
+// 导入辅助函数
+import { mapState } from 'vuex';
 export default {
     data() {
         return {
@@ -182,13 +186,63 @@ export default {
         //用于保存右侧侧有子项的数据
         rightitemArray:[],
         //用来保存导航栏状态
-        navstateDefault:true
+        navstateDefault:true,
+        userInfo:'',
+        // 导航栏logo
+        logoImgClass:'icon-logo',
+        // 首页左边导航项
+        leftnavList:[
+            {title:"首页",arrow:false,strid:"home",img:false},
+            {title:"发现",arrow:true,strid:"find",img:false},
+            {title:"找人/机构",arrow:false,strid:"institutions",img:false},
+            {title:"学院",arrow:false,strid:"college",img:false},
+            {title:"素材",arrow:true,strid:"material",img:false},
+            {title:"活动",arrow:true,strid:"activity",img:false},
+            {title:"更多",arrow:true,strid:"more",img:false}
+            ],
+        // 自导航栏子项数据
+        navsonitemList:[
+            {top:{title:"作品",son:['广告','宣传片','剧情短片','记录片','创意混剪','MV']},center:{title:"文章"},footer:{title:"场库-高品质精选"}},
+            {top:{title:"视频",son:["动物","人物","自然","科技","建筑物","商业"]},center:{title:"音乐",son:["商业","动感","快乐","预告片","灵感","摇滚"]},footer:{title:"图片"}},
+            {top:{title:"电影季"},center:{title:"创作吧少年"},footer:{title:"NEW VISION毕业展"},footer2:{title:"更多"}},
+            {top:{title:"新片场影业"},center:{title:"新片场短视频"},footer:{title:"新片场营销"}}
+            ],
+        // ************右侧导航栏********************
+         // 导航栏logo
+        rightImgClass:"icon-pinpaihuiyuanzhan",
+        // 首页右边导航项
+        rightnavList:[
+            {title:"搜索",arrow:false,strid:"search",img:true,imgClass:'icon-icon_search'},
+            {title:"消息",arrow:false,strid:"lingdang",img:true,imgClass:'icon-lingdang'},
+            {title:"登录",arrow:false,strid:"xuanzhong",img:false,imgClass:'icon-yduigerenzhongxinxuanzhong'},
+            {title:"注册",arrow:false,strid:"xiaoxi",img:false}
+            ],
+        // 右侧自导航栏子项数据
+        rightnavsonitemList:null,
+        // 状态模式 登录 或者
+        navstate:false
         }
         
     },
     // 挂载生命周期
     mounted () {
         this.popperInit();
+        // 对数据进行更新操作
+        this.logoImgClass=this.logoImgClass1;
+        this.leftnavList=this.leftnavList1;
+        this.navsonitemList=this.navsonitemList1;
+        this.rightImgClass=this.rightImgClass1;
+        // 获取用户信息
+        this.userInfo=this.userInfo1;
+        // 状态进行更新
+        this.navstate=this.navstate1;
+        // 如果状态是登录状态 数据进行更新
+        if(this.navstate){
+            this.rightnavList=this.rightnavList1;
+            // 进行细节处理
+            this.rightnavList[2].title=this.userInfo.uname;
+            this.rightnavsonitemList=this.rightnavsonitemList1;
+        }
     },
     methods: {
         // 为所有子项popper初始化
@@ -211,12 +265,13 @@ export default {
                     this.rightitemArray.push(it.strid);
                 }
             }
-            console.log(this.rightitemArray);
             // 为子项定位 
-
-            for(let index=0;index<this.rightitemArray.length;index++){
-                this.createtippy(this.$refs[this.rightitemArray[index]][0],this.$refs['rightnavsonitem'+index][0]);
+            if(this.rightnavsonitemList!=null){
+                for(let index=0;index<this.rightitemArray.length;index++){
+                    this.createtippy(this.$refs[this.rightitemArray[index]][0],this.$refs['rightnavsonitem'+index][0]);
+                }
             }
+
 
         },
         // 创建tippy提示框
@@ -231,96 +286,19 @@ export default {
             });
         }
     },
-    // 基本数据
-    props:{
-        // 导航栏logo
-        logoImgClass:{
-            type:String,
-            default:'icon-logo'
-        },
-        // 首页左边导航项
-        leftnavList:{
-            type:Array,
-            default:function(){
-                return [
-                {title:"首页",arrow:false,strid:"home",img:false},
-                {title:"发现",arrow:true,strid:"find",img:false},
-                {title:"找人/机构",arrow:false,strid:"institutions",img:false},
-                {title:"学院",arrow:false,strid:"college",img:false},
-                {title:"素材",arrow:true,strid:"material",img:false},
-                {title:"活动",arrow:true,strid:"activity",img:false},
-                {title:"更多",arrow:true,strid:"more",img:false}
-                ]
-            }
-        },
-        // 自导航栏子项数据
-        navsonitemList:{
-            type:Array,
-            default:function(){
-                return [
-                {top:{title:"作品",son:['广告','宣传片','剧情短片','记录片','创意混剪','MV']},center:{title:"文章"},footer:{title:"场库-高品质精选"}},
-                {top:{title:"视频",son:["动物","人物","自然","科技","建筑物","商业"]},center:{title:"音乐",son:["商业","动感","快乐","预告片","灵感","摇滚"]},footer:{title:"图片"}},
-                {top:{title:"电影季"},center:{title:"创作吧少年"},footer:{title:"NEW VISION毕业展"},footer2:{title:"更多"}},
-                {top:{title:"新片场影业"},center:{title:"新片场短视频"},footer:{title:"新片场营销"}}
-                ]
-            }
-        },
-        // ************右侧导航栏********************
-         // 导航栏logo
-        rightImgClass:{
-            type:String,
-            default:"icon-pinpaihuiyuanzhan"
-        },
-        // 首页右边导航项
-        rightnavList:{
-            type:Array,
-            default:()=>{
-                return [
-                {title:"搜索",arrow:false,strid:"search",img:true,imgClass:'icon-icon_search'},
-                {title:"消息",arrow:false,strid:"lingdang",img:true,imgClass:'icon-lingdang'},
-                {title:"个人",arrow:true,strid:"xuanzhong",img:true,imgClass:'icon-yduigerenzhongxinxuanzhong'},
-                {title:"发布消息",arrow:true,strid:"xiaoxi",img:false}
-                ]
-            }
-        },
-        // 右侧自导航栏子项数据
-        rightnavsonitemList:{
-            type:Array,
-            default:function(){
-                return [
-                    {
-                        top:{title:"个人主页"},
-                        center:{title:"收藏"},
-                        footer:{title:"我的课程"},
-                        footer2:{title:"我的素材"},
-                        footer3:{title:"我的订单"},
-                        footer4:{title:"我的优惠券"},
-                        footer5:{title:"我的购物车"},
-                        footer6:{title:"认证"},
-                        footer7:{title:"账号设置"},
-                        footer7:{title:"退出登录"}
-                    },
-                    {
-                        top:{title:"上传视频"},
-                        center:{title:"发布文章"}
-                    }
-                ]
-            }
-        },
-        // 状态模式 登录 或者
-        navstate:{
-            type:Boolean,
-            default:false
-        },
-        userInfo:{
-            type:Object
-        }
-    },
-    // 组件传值是在挂载之后, 对传值进行处理
-    updated(){
-        alert(this.navstate);
-        
-    },
+    // 数据映射
+    computed:{
+        ...mapState({
+            userInfo1:state=>state.userInfo,
+            logoImgClass1:state=>state.navInfo.logoImgClass,
+            leftnavList1:state=>state.navInfo.leftnavList,
+            navsonitemList1:state=>state.navInfo.navsonitemList,
+            rightImgClass1:state=>state.navInfo.rightImgClass,
+            rightnavsonitemList1:state=>state.navInfo.rightnavsonitemList,
+            // 代考虑要不要
+            navstate1:state=>state.navInfo.navstate
+        })
+    }
   
     
 
