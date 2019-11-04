@@ -3,17 +3,17 @@
 
         <!-- 导航栏 -->
         <div class="nav">
-            <ul class="leftnav">
+            <ul class="leftnav" @click="leftnav">
                 <!-- 图片logo部分 -->
                 <li class="logoImg"><a href="javascript:;" class="iconfont logo" :class="logoImgClass"></a> </li>
-                <li v-for="(item,i) of leftnavList" :key="i" :class="{arrow:item.arrow}" :ref="item.arrow&&item.strid">
+                <li v-for="(item,i) of leftnavList" :key="i" :class="{arrow:item.arrow}" :ref="item.arrow&&item.strid" :data-strid="item.strid">
                      <i class="iconfont iimg" v-show="item.img" :class="item.imgClass"></i>{{item.title}}
                 </li>
             </ul>
             <!-- 右侧导航栏部分 -->
-            <ul class="rightnav">
+            <ul class="rightnav" @click="routerChange">
                 <li class="logoImg"><a href="javascript:;" class="iconfont iimg" :class="rightImgClass"></a></li>
-                <li v-for="(itemR,iR) of rightnavList" :key="iR" :class="{arrow:itemR.arrow}" :ref="itemR.arrow&&itemR.strid">
+                <li v-for="(itemR,iR) of rightnavList" :key="iR" :class="{arrow:itemR.arrow}" :ref="itemR.arrow&&itemR.strid" :data-strid="itemR.strid">
                     <i class="iconfont iimg" v-show="itemR.img" :class="itemR.imgClass"></i>{{itemR.title}}
                 </li>
             </ul>
@@ -35,10 +35,11 @@
         <!-- 右侧子项 -->
         <div v-if="rightnavsonitemList!=null">
             <ul class="navsonitem" :ref="'rightnavsonitem'+index" v-for="(item,index) of rightnavsonitemList" :key="index+'right'">
-                <li v-for="(con,key) of rightnavsonitemList[index]" :key="key" class="sonitem">
-                    <span class="title"><a href="javascript:;">{{con.title}}»</a></span>
+                <!-- 右侧下拉项 -->
+                <li v-for="(con,key) of rightnavsonitemList[index]" :key="key" class="sonitem" @click="rightitemclick">
+                    <span class="title" :ref="con.title" :data-title="con.title"><a href="javascript:;">{{con.title}}»</a></span>
                     <ul class="content">
-                        <li v-for="(son,i) of con.son" :key="i"><a href="javascript:;">{{son}}</a></li>
+                        <li v-for="(son,i) of con.son" :key="i" ><a href="javascript:;">{{son}}</a></li>
                     </ul>
                 </li>
             </ul>
@@ -178,6 +179,7 @@
 import "@/assets/css/navthemes.css"
 // 导入辅助函数
 import { mapState } from 'vuex';
+import { mapMutations } from 'vuex';
 export default {
     data() {
         return {
@@ -210,7 +212,7 @@ export default {
         // ************右侧导航栏********************
          // 导航栏logo
         rightImgClass:"icon-pinpaihuiyuanzhan",
-        // 首页右边导航项
+        // 首页右边导航项 默认的数据是 未登录
         rightnavList:[
             {title:"搜索",arrow:false,strid:"search",img:true,imgClass:'icon-icon_search'},
             {title:"消息",arrow:false,strid:"lingdang",img:true,imgClass:'icon-lingdang'},
@@ -220,22 +222,13 @@ export default {
         // 右侧自导航栏子项数据
         rightnavsonitemList:null,
         // 状态模式 登录 或者
-        navstate:false
+        navstate:false,
         }
         
     },
-    // 挂载生命周期
-    mounted () {
-        this.popperInit();
-        // 对数据进行更新操作
-        this.logoImgClass=this.logoImgClass1;
-        this.leftnavList=this.leftnavList1;
-        this.navsonitemList=this.navsonitemList1;
-        this.rightImgClass=this.rightImgClass1;
-        // 获取用户信息
-        this.userInfo=this.userInfo1;
-        // 状态进行更新
-        this.navstate=this.navstate1;
+    // 数据处理操作
+    created(){
+        this.dataYS();
         // 如果状态是登录状态 数据进行更新
         if(this.navstate){
             this.rightnavList=this.rightnavList1;
@@ -243,6 +236,11 @@ export default {
             this.rightnavList[2].title=this.userInfo.uname;
             this.rightnavsonitemList=this.rightnavsonitemList1;
         }
+    },
+    // 挂载生命周期
+    mounted () {
+         this.popperInit();
+
     },
     methods: {
         // 为所有子项popper初始化
@@ -284,7 +282,77 @@ export default {
             duration: 1000,
             delay: 50,
             });
-        }
+        },
+
+        // 为左侧添加事件
+        leftnav(e){
+            console.log(e.target.dataset.strid);
+             switch(e.target.dataset.strid) {
+                 // 首页跳转
+                case "home":
+                    // 写缓存
+                    if(sessionStorage.getItem("key")=="key"){
+                        this.$router.push("/HomeLogin");
+                    }
+                    else{
+                        this.$router.push("/");
+                    }
+                    break;
+                    
+            }
+        },
+        // 为右侧导航条添加事件
+        routerChange(e){
+            // console.log(e.target.dataset.strid)
+            switch(e.target.dataset.strid) {
+                 // 登录跳转
+                case "xuanzhong":
+                    this.$router.push({path: '/login', query: {defaultid: 0}});
+                    break;
+                // 注册跳转
+                case "xiaoxi":
+                    this.$router.push({path: '/login', query: {defaultid:1}});
+                    break;
+                    
+            }
+
+        },
+        // 为右侧每个子项添加事件
+        rightitemclick(e){
+            // 退出登录
+            if(e.target.dataset.title='退出登录»'){
+
+               Promise.all([this.changenavstate({
+                   value:false
+               })])
+               .then(()=>{
+                // 清缓存
+                sessionStorage.removeItem("key");
+                // 跳转
+                this.$router.push( '/');
+                // 页面数据更新
+                this.dataYS();
+               })
+               
+            }
+        },
+        // 数据同步
+        dataYS(){
+            this.logoImgClass=this.logoImgClass1;
+            this.leftnavList=this.leftnavList1;
+            this.navsonitemList=this.navsonitemList1;
+            this.rightImgClass=this.rightImgClass1;
+            
+            // 获取用户信息
+            this.userInfo=this.userInfo1;
+            // 状态进行更新
+            this.navstate=this.navstate1;
+        },
+        // 使用辅助函数进行登录状态操作
+        ...mapMutations({
+            'changeUserInfo':'changeUserInfo',
+            "changenavstate":"changenavstate"
+        })
     },
     // 数据映射
     computed:{
@@ -293,9 +361,11 @@ export default {
             logoImgClass1:state=>state.navInfo.logoImgClass,
             leftnavList1:state=>state.navInfo.leftnavList,
             navsonitemList1:state=>state.navInfo.navsonitemList,
+
             rightImgClass1:state=>state.navInfo.rightImgClass,
+            rightnavList1:state=>state.navInfo.rightnavList,
             rightnavsonitemList1:state=>state.navInfo.rightnavsonitemList,
-            // 代考虑要不要
+            
             navstate1:state=>state.navInfo.navstate
         })
     }

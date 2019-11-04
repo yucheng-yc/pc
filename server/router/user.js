@@ -24,12 +24,12 @@ router.get("/v1/login/:uphone&:upwd",(req,res)=>{
 //为注册配置路由
 router.put("/v1/reg",(req,res)=>{
     // 获取注册信息
-    pool.query('INSERT INTO userInfo SET ?',[req.body],(err,result)=>{
+    pool.query('INSERT INTO userInfo SET?',[req.body],(err,result)=>{
         if(result==null){
             return;
         }
         if(result.affectedRows>0){
-            req.session.uphone=uphone;
+            req.session.uphone=req.body.uphone;
             res.send({code:200,msg:"ok"});
         }
         else {

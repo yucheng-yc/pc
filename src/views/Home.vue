@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-      <nav-bar :userInfo="userInfo"></nav-bar>
+      <nav-bar3></nav-bar3>
       <bg-video></bg-video>
       <home-article></home-article>
       <article-show :togglePhotos="false"></article-show>
@@ -15,7 +15,7 @@
 
 <script>
 // 视频首页导航栏
-import navBar from '../components/navBar'
+import navBar3 from '../components/navBar3'
 // 视频首页 背景视频
 import bgVideo from '../components/bgVideo';
 // 视频首页 文章展示
@@ -49,34 +49,9 @@ export default {
     homeCserver,
     say,
     homefooter,
-    navBar
+    navBar3
   },
-  // vuex数据处理 
-  created(){
 
-    // navstate如果为true则为登录状态 若为false则未登录
-    if(this.navstate){
-       
-    }else{
-
-    }
-     console.log(this.userInfo);
-    console.log(this.rightnavsonitemList);
-
-  },
-  // 数据映射
-  computed:{
-      ...mapState({
-          userInfo:state=>state.userInfo,
-          logoImgClass:state=>state.navInfo.logoImgClass,
-          leftnavList:state=>state.navInfo.leftnavList,
-          navsonitemList:state=>state.navInfo.navsonitemList,
-          rightImgClass:state=>state.navInfo.rightImgClass,
-          rightnavsonitemList:state=>state.navInfo.rightnavsonitemList,
-          // 代考虑要不要
-          navstate:state=>state.navInfo.navstate
-      })
-  }
 }
 </script>
 

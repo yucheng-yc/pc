@@ -83,3 +83,43 @@
     //         type:Object
     //     }
     // },
+
+
+
+
+
+
+
+
+
+
+    [
+        {
+            top:{title:"个人主页"},
+            center:{title:"收藏"},
+            footer:{title:"我的课程"},
+            footer2:{title:"我的素材"},
+            footer3:{title:"我的订单"},
+            footer4:{title:"我的优惠券"},
+            footer5:{title:"我的购物车"},
+            footer6:{title:"认证"},
+            footer7:{title:"账号设置"},
+            footer7:{title:"退出登录"}
+        },
+        {
+            top:{title:"上传视频"},
+            center:{title:"发布文章"}
+        }
+    ]
+
+
+
+
+
+                    // 对服务器返回的状态码进行判断 
+                    // 若登录成功跳转HomeLogin
+                // if(res.data.code===200) {
+                //     this.$router.push("/HomeLogin");
+                //     // 将登录信息写入缓存  这里未考虑安全性 只为了减少请求
+                //     sessionStorage.setItem('loginInfo',[this.idx0phoneIpt,this.idx0pwdIpt]);
+                // }

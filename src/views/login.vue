@@ -379,15 +379,21 @@ export default {
             regPwd:''
         }
     },
+    // 加载组件判断登录还是注册
     created(){
         // 通过路由传值判断显示登陆 还是注册页
-        // this.$route
-        this.swiperOption.initialSlide=1;
+        if(this.$route.query.defaultid==0){
+            this.swiperOption.initialSlide=0;
+        }else if(this.$route.query.defaultid==1){
+            this.swiperOption.initialSlide=1;
+        }
+        
     },
     mounted(){
         this.myTip(); 
         this.outInputYzm=this.mycanvas(this.$refs.c1).join('').toUpperCase();
     },
+    // 计算属性 简化swiper
     computed:{
         swiper(){
            return this.$refs.mySwiper.swiper;
@@ -422,19 +428,19 @@ export default {
             // 发送ajax请求 登录操作
             this.axios.get(`/user/v1/login/${this.idx0phoneIpt}&${this.idx0pwdIpt}`)
             .then(res=>{
-                // 对服务器返回的状态码进行判断 
-                    // 若登录成功跳转HomeLogin
-                // if(res.data.code===200) {
-                //     this.$router.push("/HomeLogin");
-                //     // 将登录信息写入缓存  这里未考虑安全性 只为了减少请求
-                //     sessionStorage.setItem('loginInfo',[this.idx0phoneIpt,this.idx0pwdIpt]);
-                // }
+
                 // 判断是否注册成功 然后跳转页面
                  if(res.data.code===200) {
                    
                     Promise.all([this.changeUserInfo({upwd:this.idx0pwdIpt,uphone:this.idx0phoneIpt,uname:this.regName})])
                     .then(()=>{
-                        this.$router.push("/HomeLogin");
+                        // 保存用户状态 修改vuex
+                        Promise.all([this.changenavstate({value:true})])
+                        .then(()=>{
+                            sessionStorage.setItem("key",'key');
+                            // 跳转 登录后的主页面
+                            this.$router.push("/HomeLogin");
+                        })
                     })
                     .catch(()=>{
                         alert('vuex修改状态失败');
@@ -486,7 +492,13 @@ export default {
                    
                     Promise.all([this.changeUserInfo({upwd:this.regPwd,uphone:this.regPhone,uname:this.regName})])
                     .then(()=>{
-                        this.$router.push("/HomeLogin");
+                         Promise.all([this.changenavstate({value:true})])
+                         .then(()=>{
+                            sessionStorage.setItem("key",'key');
+                            this.$router.push("/HomeLogin");
+                         })
+                        
+                        
                     })
                     .catch(()=>{
                         alert('vuex修改状态失败');
@@ -496,7 +508,7 @@ export default {
             }
             )
             .catch((err)=>{
-                console.log(err);
+                
             })
 
 
@@ -563,7 +575,8 @@ export default {
         },
         // 使用辅助函数进行登录状态操作
         ...mapMutations({
-            'changeUserInfo':'changeUserInfo'
+            'changeUserInfo':'changeUserInfo',
+            "changenavstate":"changenavstate"
         })
 
     }

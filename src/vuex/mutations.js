@@ -6,8 +6,9 @@ export default {
     state.userInfo.uphone = uphone;
     state.userInfo.upwd = upwd;
   },
-  [types.SETERROR] (state, payload) {
-    state.errors = payload;
+  // 用于修改登录状态
+  [types.changenavstate] (state, {value}) {
+    state.navInfo.navstate = value;
   },
 
   [types.COUNTASYNC] (state, payload) {

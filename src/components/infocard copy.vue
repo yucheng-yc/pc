@@ -482,7 +482,6 @@ export default {
             con:this.$refs.tiptitle_twn,
             place:'right-end'
         })
-        console.log(this.$refs.tiptitle_twn)
  
     },
     methods:{
