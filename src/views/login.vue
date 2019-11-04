@@ -379,6 +379,11 @@ export default {
             regPwd:''
         }
     },
+    created(){
+        // 通过路由传值判断显示登陆 还是注册页
+        // this.$route
+        this.swiperOption.initialSlide=1;
+    },
     mounted(){
         this.myTip(); 
         this.outInputYzm=this.mycanvas(this.$refs.c1).join('').toUpperCase();
