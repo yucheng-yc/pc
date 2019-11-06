@@ -13,6 +13,9 @@
   a {
     text-decoration: none;
   }
+  #app {
+    background: rgb(247, 247, 247);
+  }
 </style>
 
 <script>

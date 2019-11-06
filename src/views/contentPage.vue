@@ -15,6 +15,9 @@
 </template>
 
 <style scoped>
+.contentPage {
+    background: rgb(247, 247, 247);
+}
 .content {
     display: flex;
     justify-content: center;
@@ -23,7 +26,7 @@
 }
 .contentleft {
     width: 750px;
-    background: orange;
+    /* background: orange; */
     margin-right: 1rem;
 }
 .contentright {

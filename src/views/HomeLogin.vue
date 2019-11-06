@@ -50,7 +50,9 @@
 </template>
 
 <style scoped>
-
+.HomeLogin {
+    background: rgb(247, 247, 247);
+}
 </style>
 
 <script>
