@@ -28,6 +28,22 @@
         <model-page :boxCardList="HomeLogin.boxCardList3" :selectDate="HomeLogin.selectDate7"></model-page>
 
 
+        <content-page></content-page>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <!-- 页面底部 -->
         <homefooter></homefooter>
     </div>
@@ -47,6 +63,9 @@ import homefooter from "../components/homefooter";
 // 导入登录后主页 内容模块
 import modelPage from '../components/modelPage';
 
+// 测试模块
+import contentPage from '../views/contentPage'
+
 // 加载vuex内的数据 使用vuex辅助函数
 import { mapState } from 'vuex';
 export default {
@@ -55,7 +74,8 @@ export default {
         navBar3,
         homeswiper,
         homefooter,
-        modelPage
+        modelPage,
+        contentPage
     },
     data(){
         return {

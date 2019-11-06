@@ -223,6 +223,8 @@ export default {
         rightnavsonitemList:null,
         // 状态模式 登录 或者
         navstate:false,
+        // 用于保存所有tippy对象
+        tippyArr:[]
         }
         
     },
@@ -241,6 +243,13 @@ export default {
     mounted () {
          this.popperInit();
 
+        //  进行内存清理 防止内存泄漏
+         this.$once("hook:beforeDestroy",()=>{
+            this.tippyArr.forEach((val,i,arr)=>{
+                this.val=null;
+            })
+         })
+
     },
     methods: {
         // 为所有子项popper初始化
@@ -253,7 +262,7 @@ export default {
             }
             // 为子项定位 
             for(var i=0;i<this.itemArray.length;i++){
-                this.createtippy(this.$refs[this.itemArray[i]][0],this.$refs['navsonitem'+i][0]);
+               this.tippyArr.push(this.createtippy(this.$refs[this.itemArray[i]][0],this.$refs['navsonitem'+i][0]));
             }
 
             // 右侧导航栏 操作
