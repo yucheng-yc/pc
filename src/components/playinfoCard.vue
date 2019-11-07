@@ -249,7 +249,7 @@ export default {
                     {bq:" 举报",url:""}
                 ],
                 // 播放量
-                playnum:10000,
+                playnum:1000500,
                 // btn组信息
                 btns:[
                     {ctn:"喜欢",btnnum:271,btnurl:''},
@@ -282,31 +282,19 @@ export default {
     },
     filters:{
         numChange(nStr){
-
-            // 10000
-
-        //     var n=0;
-        //     var ye=e;
-        //     var v='';
-        //     while(e/1000>1){
-        //         n++;
-        //         if(e/1000<1){
-        //             break;
-        //         }
-        //     }
-           
-        //    for(var i=0;i<n;i++){
-        //         v+=','+ye.toString().slice(-4,-1);console.log(v);
-
-        //    }
+        // 先将数字变成字符串
         nStr += '';  
-	   var x = nStr.split('.');  
-	   var x1 = x[0];  
-	   var x2 = x.length > 1 ? '.' + x[1] : '';  
+        // 以小数为切割 为两部分
+       var x = nStr.split('.');  
+        //  整数部分 
+       var x1 = x[0];  
+        // 如果有小数部分 加点 赋值小数部分    
+       var x2 = x.length > 1 ? '.' + x[1] : '';  
+        // 创建正则     
 	    var rgx = /(\d+)(\d{3})/;  
 	    while (rgx.test(x1)) {  
 	        x1 = x1.replace(rgx, '$1' + ',' + '$2');  
-	    }  
+        }  
 	    return x1 + x2; 
 
         }

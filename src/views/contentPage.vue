@@ -5,7 +5,10 @@
 
         <div class="content">
             <div class="contentleft">
+                <!-- 播放信息 -->
                 <playinfo-card></playinfo-card>
+                <!-- 评论模块 -->
+                <comments></comments>
             </div>
             <div class="contentright">
 
@@ -21,7 +24,7 @@
 .content {
     display: flex;
     justify-content: center;
-    height: 800px;
+    /* height: 800px; */
     margin-top: 1rem;
 }
 .contentleft {
@@ -40,10 +43,13 @@
 import contentvideo from "../components/contentvideo"
 // 加载视屏介绍信息模块
 import playinfoCard from "../components/playinfoCard"
+// 加载评论模块
+import comments from '../components/comments'
 export default {
     components: {
         contentvideo,
-        playinfoCard
+        playinfoCard,
+        comments
     }
 }
 </script>
