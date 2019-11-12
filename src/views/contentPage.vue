@@ -11,8 +11,14 @@
                 <comments></comments>
             </div>
             <div class="contentright">
+                <!-- 创作人列表 -->
+                <authors-list></authors-list>
+
+                <!-- 浏览记录 -->
+                <visit-history></visit-history>
 
             </div>
+            
         </div>
     </div>
 </template>
@@ -34,7 +40,6 @@
 }
 .contentright {
     width: 375px;
-    background: red;
 }
 </style>
 
@@ -45,11 +50,22 @@ import contentvideo from "../components/contentvideo"
 import playinfoCard from "../components/playinfoCard"
 // 加载评论模块
 import comments from '../components/comments'
+// 加载用户列表模块
+import authorsList from "../components/authorsList";
+// 加载访客历史记录模块
+import visitHistory from "../components/visitHistory"
 export default {
     components: {
         contentvideo,
         playinfoCard,
-        comments
+        comments,
+        authorsList,
+        visitHistory
+    },
+    data(){
+        return {
+           
+        }
     }
 }
 </script>

@@ -19,6 +19,7 @@
 .commentsInput {
     padding: 20px 30px 30px;
     background-color: white;
+    
 }
 .title {
     color: #333333;  
