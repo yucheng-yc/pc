@@ -17,6 +17,9 @@
                 <!-- 浏览记录 -->
                 <visit-history></visit-history>
 
+                <!-- 创作人的其他作品 -->
+                <creators-other-products></creators-other-products>
+
             </div>
             
         </div>
@@ -53,14 +56,17 @@ import comments from '../components/comments'
 // 加载用户列表模块
 import authorsList from "../components/authorsList";
 // 加载访客历史记录模块
-import visitHistory from "../components/visitHistory"
+import visitHistory from "../components/visitHistory";
+// 加载创作人其他作品展示模块
+import creatorsOtherProducts from "../components/creatorsOtherProducts";
 export default {
     components: {
         contentvideo,
         playinfoCard,
         comments,
         authorsList,
-        visitHistory
+        visitHistory,
+        creatorsOtherProducts
     },
     data(){
         return {

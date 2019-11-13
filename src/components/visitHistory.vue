@@ -6,8 +6,8 @@
                 <h3 class="title">来访创作人</h3>
                 <!-- 切换盒子 -->
                 <div class="tabBox">
-                    <span :class="{active:stateTg}">看过</span>
-                    <span :class="{active:!stateTg}">喜欢</span>
+                    <span :class="{active:stateTg}" @click="stateTg=!stateTg">看过</span>
+                    <span :class="{active:!stateTg}" @click="stateTg=!stateTg">喜欢</span>
                 </div>
             </div>
             <!-- 内容列表部分 -->
@@ -66,9 +66,10 @@
     padding: 0;
 }
 .tabBox {
-    width: 100px;
+    width: 150px;
     padding-top: 10px;
     cursor: pointer;
+    text-align: right;
 }
 .tabBox>span {
     padding: 0 12px;
@@ -84,13 +85,14 @@
     font-family: 'iconfont';
     position: relative;
     right: -12px;
+    color: #333;
 }
 .tabBox>span:hover {
     color: #e74b3b;
 }
 /* 当点击是加上红色字体 */
 .active {
-    color: #e74b3b;
+    color: #e74b3b !important;
 }
 .content {
     display: flex;
