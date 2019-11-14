@@ -14,15 +14,18 @@ router.get("/v1/login/:uphone&:upwd",(req,res)=>{
                 return;
             }
             req.session.uphone=uphone;
-            res.send({code:200,msg:"登录成功"});
-           
+            
+            var getUserInfoSql="SELECT uname,uphone FROM userInfo WHERE uphone=?"
+            pool.query(getUserInfoSql,[uphone],(e,s)=>{
+                res.send({code:200,msg:"登录成功",userInfo:s});
+            })
         }
         );
     }
 });
 
 //为注册配置路由
-router.put("/v1/reg",(req,res)=>{
+router.post("/v1/reg",(req,res)=>{
     // 获取注册信息
     pool.query('INSERT INTO userInfo SET?',[req.body],(err,result)=>{
         if(result==null){
@@ -38,6 +41,15 @@ router.put("/v1/reg",(req,res)=>{
     })
     
 }) 
+
+// 配置视频列表接口
+router.get("/v1/getCardInfo/:mid",(req,res)=>{
+    var getCardInfoSql="SELECT * FROM movelist WHERE mid=?";
+    pool.query(getCardInfoSql,[req.params.mid],(err,result)=>{
+        console.log(err);
+        res.send({code:200,msg:'seccess',result:result});
+    })
+})
 
 
 

@@ -392,6 +392,13 @@ export default {
     mounted(){
         this.myTip(); 
         this.outInputYzm=this.mycanvas(this.$refs.c1).join('').toUpperCase();
+        // 发送ajax请求，获取数据
+        this.axios.get("/user/v1/getCardInfo/1").then((res)=>{
+            console.log(res.data);
+        })
+        .catch(()=>{
+
+        })
     },
     // 计算属性 简化swiper
     computed:{
@@ -428,11 +435,11 @@ export default {
             // 发送ajax请求 登录操作
             this.axios.get(`/user/v1/login/${this.idx0phoneIpt}&${this.idx0pwdIpt}`)
             .then(res=>{
-
+                var data=res.data;
                 // 判断是否注册成功 然后跳转页面
-                 if(res.data.code===200) {
+                 if(data.code===200) {
                    
-                    Promise.all([this.changeUserInfo({upwd:this.idx0pwdIpt,uphone:this.idx0phoneIpt,uname:this.regName})])
+                    Promise.all([this.changeUserInfo({upwd:this.idx0pwdIpt,uphone:data.uphone,uname:data.uname})])
                     .then(()=>{
                         // 保存用户状态 修改vuex
                         Promise.all([this.changenavstate({value:true})])
@@ -445,6 +452,7 @@ export default {
                     .catch(()=>{
                         alert('vuex修改状态失败');
                     })
+
                     
                 }
             })
@@ -472,7 +480,7 @@ export default {
                 return;
             }
             // 对验证码进行验证
-            if(this.userInputYzm.trim().toUpperCase()!=this.outInputYzm.trim()){
+            if(this.outInputYzm!=this.userInputYzm.trim().toUpperCase()){
                 alert('验证码错误，请重新输入');
                 this.outInputYzm=this.mycanvas(this.$refs.c1);
                 return;
@@ -485,7 +493,7 @@ export default {
             }
 
             // 发送ajax请求 进行注册
-            this.axios.put("/user/v1/reg",`upwd=${this.regPwd}&uphone=${this.regPhone}&uname=${this.regName}`)
+            this.axios.post("/user/v1/reg",`upwd=${this.regPwd}&uphone=${this.regPhone}&uname=${this.regName}`)
             .then((res)=>{
                 // 判断是否注册成功 然后跳转页面
                  if(res.data.code===200) {
